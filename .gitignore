@@ -1,0 +1,13 @@
+# Ignore all
+*
+
+# Include project files
+!/**/
+!*.*
+!Makefile
+!demo
+!readme
+
+# Ignore out files
+*.o
+*.out

@@ -11,3 +11,6 @@
 # Ignore out files
 *.o
 *.out
+
+# Ignore zip files
+*.zip

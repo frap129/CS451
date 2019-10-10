@@ -34,11 +34,10 @@ options set_options(int argc, char **argv) {
                 break;
             case '?':
                 if (optopt == 'p') {
-                    //The -p flag was set but no argument was provided
-                    printf("You must provide a PID with the -%c option.\n", optopt);
+                    print_help(argv);
                     exit(EXIT_FAILURE);
                 } else {
-                    printf("Unknown option `-%c'.\n", optopt);
+                    print_help(argv);
                     exit(EXIT_FAILURE);
                 }
 
@@ -55,4 +54,15 @@ int is_opts_empty(options opts) {
         return 1;
 
     return 0;
+}
+
+void print_help(char **argv) {
+    printf("\n");
+    printf("Usage: %s [options]\n\n", argv[0]);
+    printf("Options:\n");
+    printf("-p <pid> \t Display information about the given process id.\n");
+    printf("-s \t\t Display the processes current state.\n");
+    printf("-t \t\t Display the time the process has consumed.\n");
+    printf("-v \t\t Display the amount of virtual memory used by the process.\n");
+    printf("-c \t\t Display the command that spawned the process.\n");
 }

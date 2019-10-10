@@ -20,5 +20,6 @@ typedef struct program_options options;
 
 options set_options(int argc, char **argv);
 int is_opts_empty(options opts);
+void print_help(char **argv);
 
 #endif // UTILS_H

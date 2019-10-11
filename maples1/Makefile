@@ -1,6 +1,7 @@
 ASSIGNMENT := 1
 NAME := 5ps
 NAME2 := utils
+NAME3 := parser
 
 PHONY: clean build
 clean:
@@ -9,7 +10,7 @@ clean:
 	@echo "Build files removed!" $<
 build:
 	@echo "Compiling..." $<
-	@gcc $(NAME).c $(NAME2).c -g -Wall -Wextra -o $(NAME) $<
+	@gcc $(NAME).c $(NAME2).c $(NAME3).c -g -Wall -Wextra -o $(NAME) $<
 
 	@zip -r9 maples$(ASSIGNMENT).zip ../maples$(ASSIGNMENT) \
             -x ../maples$(ASSIGNMENT)/Makefile \

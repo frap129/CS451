@@ -7,12 +7,13 @@
  */
 
 #include <stdio.h>
+#include "parser.h"
 #include "utils.h"
 
 int main(int argc, char *argv[]) {
     options opts = set_options(argc, argv);
     if (is_opts_empty(opts))
         return 0;
-
+    
     return 0;
 }

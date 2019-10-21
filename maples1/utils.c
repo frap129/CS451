@@ -21,7 +21,7 @@ options set_options(int argc, char **argv) {
                 opts.pid = atoi(optarg);
                 break;
             case 'c':
-                opts.command = 1;
+                opts.cmd = 1;
                 break;
             case 's':
                 opts.state = 1;
@@ -49,7 +49,7 @@ options set_options(int argc, char **argv) {
 }
 
 int is_opts_empty(options opts) {
-    if (opts.pid == 0 && opts.command == 0 && opts.state == 0 &&
+    if (opts.pid == 0 && opts.cmd == 0 && opts.state == 0 &&
         opts.time == 0 && opts.vmem == 0)
         return 1;
 
@@ -64,5 +64,5 @@ void print_help(char **argv) {
     printf("-s \t\t Display the processes current state.\n");
     printf("-t \t\t Display the time the process has consumed.\n");
     printf("-v \t\t Display the amount of virtual memory used by the process.\n");
-    printf("-c \t\t Display the command that spawned the process.\n");
+    printf("-c \t\t Display the program that spawned the process.\n");
 }

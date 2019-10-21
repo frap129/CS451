@@ -13,7 +13,7 @@ struct program_options {
 	int state;
 	int time;
 	int vmem;
-	int command;
+	int cmd;
 };
 
 typedef struct program_options options;

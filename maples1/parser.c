@@ -19,7 +19,7 @@ pid_data alloc_data() {
 
     // Allocated max space needed for each string
     data.cmd = malloc(CMDLINE_MAX);
-    data.state = malloc(sizeof(char));
+    data.state = malloc(STATE_LEN_MAX);
     data.vmem = malloc(MEM_LEN_MAX);
     data.time = malloc(TIME_LEN_MAX);
 
@@ -36,7 +36,7 @@ void free_data(pid_data data) {
 
 int parse_state(const char *pid_path, pid_data data) {
     // Create path to /proc/<pid>/stat
-    char *file_path = malloc(100);
+    char *file_path = malloc(PATH_LEN_MAX);
     strcpy(file_path, pid_path);
     strcat(file_path, STAT);
 
@@ -60,7 +60,7 @@ int parse_state(const char *pid_path, pid_data data) {
 
 int parse_vmem(const char *pid_path, pid_data data) {
     // Create path to /proc/<pid>/statm
-    char *file_path = malloc(100);
+    char *file_path = malloc(PATH_LEN_MAX);
     strcpy(file_path, pid_path);
     strcat(file_path, STATM);
 
@@ -84,7 +84,7 @@ int parse_vmem(const char *pid_path, pid_data data) {
 
 int parse_cmd(const char *pid_path, pid_data data) {
     // Create path to /proc/<pid>/status
-    char *file_path = malloc(100);
+    char *file_path = malloc(PATH_LEN_MAX);
     strcpy(file_path, pid_path);
     strcat(file_path, STATUS);
 
@@ -108,7 +108,7 @@ int parse_cmd(const char *pid_path, pid_data data) {
 
 int parse_time(const char *pid_path, pid_data data){
     // Create path to /proc/<pid>/stat
-    char *file_path = malloc(100);
+    char *file_path = malloc(PATH_LEN_MAX);
     strcpy(file_path, pid_path);
     strcat(file_path, STAT);
 

@@ -19,9 +19,11 @@
 
 // Constant sizes
 #define CMDLINE_MAX		ARG_MAX // Copy from limits.h
+#define STATE_LEN_MAX	sizeof(char)
 #define PID_LEN_MAX		(sizeof(char) * 5) // Length of /proc/sys/kernel/pid_max
 #define TIME_LEN_MAX	(sizeof(char) * 100) // Actually pick a value TODO
 #define MEM_LEN_MAX		(sizeof(char) * 11) // Enough to fit double digit Gigabytes
+#define PATH_LEN_MAX	((sizeof(char) * 12) + PID_LEN_MAX) // Length of /proc + /status and a pid
 
 // Conversion constants
 #define SEC_PER_HOUR	(60 * 60) // 60 sec/min times 60 min/hour

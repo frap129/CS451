@@ -84,7 +84,7 @@ int main(int argc, char *argv[]) {
     struct stat pid_stat;
     char pid_str[PID_LEN_MAX];
     sprintf(pid_str, "%d", opts.pid);
-    char *pid_path = (char *) malloc(100);
+    char *pid_path = (char *) malloc(sizeof("/proc/") + PID_LEN_MAX);
     sprintf(pid_path, "%s%s%s", PROC, "/", pid_str);
 
     // Verify path exists, error if it doesn't

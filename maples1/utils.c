@@ -11,7 +11,16 @@
 #include <stdlib.h>
 #include "utils.h"
 
-options set_options(const int argc, const char **argv) {
+/*
+    Function Name: set_options
+    Input to the method: Number of cmdline arguments passed and the list of
+                         arguments
+    Output(Return value): An instance of options containing int/bools of the
+                          valid arguments passed
+    Brief description of the task: Parse argv for valid arguments and set them
+                                   in options, error on unknown options.
+ */
+options set_options(const int argc, char **argv) {
 	int getopt_ret; // Create int to store getopts return val
 	options opts = {0, 0, 0, 0, 0}; // Create empty opts struct
 
@@ -37,7 +46,7 @@ options set_options(const int argc, const char **argv) {
             case '?':
             default:
                 // Print help for unknown options
-                print_help(argv);
+                print_help(argv[0]);
                 exit(EXIT_FAILURE);
         }
     }
@@ -46,6 +55,12 @@ options set_options(const int argc, const char **argv) {
     return opts;
 }
 
+/*
+    Function Name: is_opts_empty
+    Input to the method: An instance of the options struct
+    Output(Return value): Empty or not (Int: 1 true, 0 false)
+    Brief description of the task: Check if all ints in options are zero
+ */
 int is_opts_empty(const options opts) {
     // Check all values stored in opts, return 1 if all 0
     if (opts.pid == 0 && opts.cmd == 0 && opts.state == 0 &&
@@ -56,14 +71,20 @@ int is_opts_empty(const options opts) {
     return 0;
 }
 
-void print_help(const char **argv) {
+/*
+    Function Name: is_opts_empty
+    Input to the method: The name of this executable (argv[0])
+    Output(Return value): Nothing (Void)
+    Brief description of the task: Print program usage and help dialog
+ */
+void print_help(char *this_prog) {
     // Print correct usage of program and its options
     printf("\n");
-    printf("Usage: %s [options]\n\n", argv[0]);
+    printf("Usage: %s [options]\n\n", this_prog);
     printf("Options:\n");
-    printf("-p <pid> \t Display information about the given process id.\n");
-    printf("-s \t\t Display the processes current state.\n");
-    printf("-t \t\t Display the time the process has consumed.\n");
-    printf("-v \t\t Display the amount of virtual memory used by the process.\n");
-    printf("-c \t\t Display the program that spawned the process.\n");
+    printf("-p <pid>\tDisplay information about the given process id.\n");
+    printf("-s\t\tDisplay the processes current state.\n");
+    printf("-t\t\tDisplay the time the process has consumed.\n");
+    printf("-v\t\tDisplay the amount of virtual memory used by the process.\n");
+    printf("-c\t\tDisplay the program that spawned the process.\n");
 }

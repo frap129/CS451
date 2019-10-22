@@ -7,12 +7,21 @@
                 handle parsing information from /proc
  */
 
-#include "parser.h"
+#include "parser.h" /* Must be included before zconf so that parser.h can
+                       include linux/limits.h */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <zconf.h>
 
+/*
+    Function Name: alloc_data
+    Input to the method: Nothing (Void)
+    Output(Return value): An empty struct of strings for holding the process
+                          name, state, size, and time
+    Brief description of the task: Create an instance of pid_data and allocate
+                                   memory for its strings
+ */
 pid_data alloc_data() {
     // Create empty data struct
     pid_data data;
@@ -26,6 +35,12 @@ pid_data alloc_data() {
     return data;
 }
 
+/*
+    Function Name: alloc_data
+    Input to the method: Any instance of pid_data with allocated memory
+    Output(Return value): Nothing (Void)
+    Brief description of the task: Free's all strings contained in pid_data
+ */
 void free_data(pid_data data) {
     // Free all strings stored in data
     free(data.cmd);
@@ -34,6 +49,13 @@ void free_data(pid_data data) {
     free(data.time);
 }
 
+/*
+    Function Name: parse_state
+    Input to the method: Path to /proc/<pid> and a struct to store the state in
+    Output(Return value): Error or not error (Int: 1 true, 0 false)
+    Brief description of the task: Open /proc/<pid>/stat, read the running
+                                   state, and save to data.state
+ */
 int parse_state(const char *pid_path, pid_data data) {
     // Create path to /proc/<pid>/stat
     char *file_path = malloc(PATH_LEN_MAX);
@@ -58,6 +80,13 @@ int parse_state(const char *pid_path, pid_data data) {
     return 0;
 }
 
+/*
+    Function Name: parse_vmem
+    Input to the method: Path to /proc/<pid> and a struct to store the size in
+    Output(Return value): Error or not error (Int: 1 true, 0 false)
+    Brief description of the task: Open /proc/<pid>/statm, read the vmeme size,
+                                   and save to data.vmem
+ */
 int parse_vmem(const char *pid_path, pid_data data) {
     // Create path to /proc/<pid>/statm
     char *file_path = malloc(PATH_LEN_MAX);
@@ -82,6 +111,13 @@ int parse_vmem(const char *pid_path, pid_data data) {
     return 0;
 }
 
+/*
+    Function Name: parse_cmd
+    Input to the method: Path to /proc/<pid> and a struct to store the name in
+    Output(Return value): Error or not error (Int: 1 true, 0 false)
+    Brief description of the task: Open /proc/<pid>/statuus, read the program
+                                   name, and save to data.cmd
+ */
 int parse_cmd(const char *pid_path, pid_data data) {
     // Create path to /proc/<pid>/status
     char *file_path = malloc(PATH_LEN_MAX);
@@ -106,6 +142,14 @@ int parse_cmd(const char *pid_path, pid_data data) {
     return 0;
 }
 
+/*
+    Function Name: parse_time
+    Input to the method: Path to /proc/<pid> and a struct to store the time in
+    Output(Return value): Error or not error (Int: 1 true, 0 false)
+    Brief description of the task: Open /proc/<pid>/stat, read the user time
+                                   and system time, convert from ticks to
+                                   hh:mm:ss, and save to data.time
+ */
 int parse_time(const char *pid_path, pid_data data){
     // Create path to /proc/<pid>/stat
     char *file_path = malloc(PATH_LEN_MAX);

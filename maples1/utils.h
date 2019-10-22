@@ -21,8 +21,8 @@ struct program_options {
 typedef struct program_options options;
 
 // Functions publically provided by utils.c
-options set_options(const int argc, const char **argv);
+options set_options(const int argc, char **argv);
 int is_opts_empty(const options opts);
-void print_help(const char **argv);
+void print_help(char *this_prog);
 
 #endif // UTILS_H

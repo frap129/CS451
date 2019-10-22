@@ -12,11 +12,13 @@
 #include "utils.h"
 
 options set_options(int argc, char **argv) {
-	int getopt_status;
-	options opts = {0, 0, 0, 0, 0};
+	int getopt_ret; // Create int to store getopts return val
+	options opts = {0, 0, 0, 0, 0}; // Create empty opts struct
 
-    while ((getopt_status = getopt(argc, argv, "p:cstv")) != -1) {
-        switch (getopt_status) {
+    // Loop over every passed option with getopt
+    while ((getopt_ret = getopt(argc, argv, "p:cstv")) != -1) {
+        // Chceck which opton was passed and handle accordingly
+        switch (getopt_ret) {
             case 'p':
                 opts.pid = atoi(optarg);
                 break;
@@ -33,30 +35,29 @@ options set_options(int argc, char **argv) {
                 opts.vmem = 1;
                 break;
             case '?':
-                if (optopt == 'p') {
-                    print_help(argv);
-                    exit(EXIT_FAILURE);
-                } else {
-                    print_help(argv);
-                    exit(EXIT_FAILURE);
-                }
-
             default:
+                // Print help for unknown options
+                print_help(argv);
                 exit(EXIT_FAILURE);
         }
     }
+
+    // Return struct of selected options.
     return opts;
 }
 
-int is_opts_empty(options opts) {
+int is_opts_empty(const options opts) {
+    // Check all values stored in opts, return 1 if all 0
     if (opts.pid == 0 && opts.cmd == 0 && opts.state == 0 &&
         opts.time == 0 && opts.vmem == 0)
         return 1;
 
+    // Return 0 if options are not all 0
     return 0;
 }
 
 void print_help(char **argv) {
+    // Print correct usage of program and its options
     printf("\n");
     printf("Usage: %s [options]\n\n", argv[0]);
     printf("Options:\n");

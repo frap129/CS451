@@ -14,32 +14,45 @@
 #include "utils.h"
 
 void print_stats(options opts, char *pid_path, char **argv) {
+    // Create and preallocate memory for a data sruct
     pid_data data = alloc_data();
 
+    // Always print PID first
     printf("%d: ", opts.pid);
 
+    // If the '-s' option was passed, print state
     if (opts.state) {
+        // If parse_state returns 1, error and exit
         if (parse_state(pid_path, data)) {
             printf("\n%s: error parsing state\n", argv[0]);
             exit(EXIT_FAILURE);
         } else
             printf("%c ", data.state[0]);
     }
+
+    // If the '-t' option was passed, print time
     if (opts.time) {
+        // If parse_time returns 1, error and exit
         if (parse_time(pid_path, data)) {
             printf("\n%s: error parsing time\n", argv[0]);
             exit(EXIT_FAILURE);
         } else
             printf("time=%s ", data.time);
     }
+
+    // If the '-v' option was passed, print vmem size
     if (opts.vmem) {
+        // If parse_vmem returns 1, error and exit
         if (parse_vmem(pid_path, data)) {
             printf("\n%s: error parsing size\n", argv[0]);
             exit(EXIT_FAILURE);
         } else
             printf("sz=%s ", data.vmem);
     }
+
+    // If the '-c' option was passed, print the name of the process
     if (opts.cmd) {
+        // If parse_cmd returns 1, error and exit
         if (parse_cmd(pid_path, data)) {
             printf("\n%s: error parsing command\n", argv[0]);
             exit(EXIT_FAILURE);
@@ -74,7 +87,7 @@ int main(int argc, char *argv[]) {
     char *pid_path = (char *) malloc(100);
     sprintf(pid_path, "%s%s%s", PROC, "/", pid_str);
 
-    // Verify path exists
+    // Verify path exists, error if it doesn't
     if (stat(pid_path, &pid_stat)) {
         printf("%s: No such PID", argv[0]);
         exit(EXIT_FAILURE);

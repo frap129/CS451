@@ -10,14 +10,12 @@
 #define PARSER_H
 
 #include <linux/limits.h>
-#include <zconf.h>
 
 // Constant paths
 #define PROC	"/proc"
 #define STAT	"/stat"
 #define STATM	"/statm"
 #define STATUS	"/status"
-#define CMDLINE	"/cmdline"
 
 // Constant sizes
 #define CMDLINE_MAX		ARG_MAX // Copy from limits.h
@@ -29,17 +27,18 @@
 #define SEC_PER_HOUR	(60 * 60) // 60 sec/min times 60 min/hour
 #define SEC_PER_MIN		60 // 60 sec/min
 
+// Struct for holding data on a process
 struct pid_data_orig {
-	FILE *stat;
-	FILE *statm;
-	FILE *status;
 	char *cmd;
 	char *state;
 	char *vmem;
 	char *time;
 };
+
+// Typedef struct so it can be used like an object
 typedef struct pid_data_orig pid_data;
 
+// Functions publically provided by parser.c
 pid_data alloc_data();
 void free_data();
 int parse_state(const char *pid_path, pid_data data);

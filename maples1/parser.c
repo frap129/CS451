@@ -7,14 +7,17 @@
                 handle parsing information from /proc
  */
 
+#include "parser.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "parser.h"
-
+#include <zconf.h>
 
 pid_data alloc_data() {
+    // Create empty data struct
     pid_data data;
+
+    // Allocated max space needed for each string
     data.cmd = malloc(CMDLINE_MAX);
     data.state = malloc(sizeof(char));
     data.vmem = malloc(MEM_LEN_MAX);
@@ -24,6 +27,7 @@ pid_data alloc_data() {
 }
 
 void free_data(pid_data data) {
+    // Free all strings stored in data
     free(data.cmd);
     free(data.state);
     free(data.vmem);
@@ -43,10 +47,11 @@ int parse_state(const char *pid_path, pid_data data) {
     if (stat_ptr == NULL)
         return 1;
 
-    // Return 1 if error scanning file
+    // Return 1 if less than 1 byte was read
     if (fscanf(stat_ptr, "%*d %*s %c", data.state) < 1)
         return 1;
 
+    // Free unneeded memory
     fclose(stat_ptr);
     free(file_path);
 
@@ -62,7 +67,7 @@ int parse_vmem(const char *pid_path, pid_data data) {
     // Get read-only pointer to /proc/<pid>/statm
     FILE *statm_ptr = fopen(file_path, "r");
 
-    // Return 1 if file not found
+    // Return 1 if less than 1 byte was read
     if (statm_ptr == NULL)
         return 1;
 
@@ -70,8 +75,10 @@ int parse_vmem(const char *pid_path, pid_data data) {
     if (fscanf(statm_ptr, "%s", data.vmem) < 1)
         return 1;
 
+    // Free unneeded memory
     fclose(statm_ptr);
     free(file_path);
+
     return 0;
 }
 
@@ -84,7 +91,7 @@ int parse_cmd(const char *pid_path, pid_data data) {
     // Get read-only pointer to /proc/<pid>/status
     FILE *status_ptr = fopen(file_path, "r");
 
-    // Return 1 if file not found
+    // Return 1 if less than 1 byte was read
     if (status_ptr == NULL)
         return 1;
 
@@ -92,8 +99,10 @@ int parse_cmd(const char *pid_path, pid_data data) {
     if (fscanf(status_ptr, "%*s\t%s", data.cmd) < 1)
         return 1;
 
+    // Free unneeded memory
     fclose(status_ptr);
     free(file_path);
+
     return 0;
 }
 
@@ -118,8 +127,13 @@ int parse_time(const char *pid_path, pid_data data){
     // Read stime and utime, then close
     long unsigned int utime = 0;
     long unsigned int stime = 0;
-    fscanf(stat_ptr, "%lu", &utime);
-    fscanf(stat_ptr, "%lu", &stime);
+
+    // Return 1 if less than 1 byte was read
+    if (fscanf(stat_ptr, "%lu", &utime) < 1 ||
+        fscanf(stat_ptr, "%lu", &stime) < 1)
+        return 1;
+
+    // Free unneeded memory
     fclose(stat_ptr);
     free(file_path);
 

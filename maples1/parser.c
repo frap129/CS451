@@ -30,44 +30,81 @@ void free_data(pid_data data) {
     free(data.time);
 }
 
-int parse_state(char *pid_path, pid_data data) {
+int parse_state(const char *pid_path, pid_data data) {
+    // Create path to /proc/<pid>/stat
+    char *file_path = malloc(100);
+    strcpy(file_path, pid_path);
+    strcat(file_path, STAT);
+
     // Get read-only pointer to /proc/<pid>/stat
-    FILE *stat_ptr = fopen(strcat(pid_path, STAT), "r");
+    FILE *stat_ptr = fopen(file_path, "r");
+
+    // Return 1 if file not found
+    if (stat_ptr == NULL)
+        return 1;
 
     // Return 1 if error scanning file
-    if (!fscanf(stat_ptr, "%*d %*s %c", data.state))
+    if (fscanf(stat_ptr, "%*d %*s %c", data.state) < 1)
         return 1;
 
     fclose(stat_ptr);
+    free(file_path);
+
     return 0;
 }
 
-int parse_vmem(char *pid_path, pid_data data) {
-	// Get read-only pointer to /proc/<pid>/statm
-    FILE *statm_ptr = fopen(strcat(pid_path, STATM), "r");
+int parse_vmem(const char *pid_path, pid_data data) {
+    // Create path to /proc/<pid>/statm
+    char *file_path = malloc(100);
+    strcpy(file_path, pid_path);
+    strcat(file_path, STATM);
+
+    // Get read-only pointer to /proc/<pid>/statm
+    FILE *statm_ptr = fopen(file_path, "r");
+
+    // Return 1 if file not found
+    if (statm_ptr == NULL)
+        return 1;
 
     // Return 1 if error scanning file
-    if (!fscanf(statm_ptr, "%s", data.vmem))
+    if (fscanf(statm_ptr, "%s", data.vmem) < 1)
         return 1;
 
     fclose(statm_ptr);
+    free(file_path);
     return 0;
 }
 
-int parse_cmd(char *pid_path, pid_data data) {
-    FILE *status_ptr = fopen(strcat(pid_path, STATUS), "r");
+int parse_cmd(const char *pid_path, pid_data data) {
+    // Create path to /proc/<pid>/status
+    char *file_path = malloc(100);
+    strcpy(file_path, pid_path);
+    strcat(file_path, STATUS);
+
+    // Get read-only pointer to /proc/<pid>/status
+    FILE *status_ptr = fopen(file_path, "r");
+
+    // Return 1 if file not found
+    if (status_ptr == NULL)
+        return 1;
 
     // Return 1 if error scanning file
-    if (!fscanf(status_ptr, "%*s\t%s", data.cmd))
+    if (fscanf(status_ptr, "%*s\t%s", data.cmd) < 1)
         return 1;
 
     fclose(status_ptr);
+    free(file_path);
     return 0;
 }
 
-int parse_time(char *pid_path, pid_data data){
+int parse_time(const char *pid_path, pid_data data){
+    // Create path to /proc/<pid>/stat
+    char *file_path = malloc(100);
+    strcpy(file_path, pid_path);
+    strcat(file_path, STAT);
+
     // Get read-only pointer to /proc/<pid>/stat
-    FILE *stat_ptr = fopen(strcat(pid_path, STAT), "r");
+    FILE *stat_ptr = fopen(file_path, "r");
 
     // Return 1 if file not found
     if (stat_ptr == NULL)
@@ -84,7 +121,8 @@ int parse_time(char *pid_path, pid_data data){
     fscanf(stat_ptr, "%lu", &utime);
     fscanf(stat_ptr, "%lu", &stime);
     fclose(stat_ptr);
-    
+    free(file_path);
+
     // Get time by adding {s,u}time and dividing by tickrate
     long unsigned int time = (utime + stime) / sysconf(_SC_CLK_TCK);
 

@@ -42,8 +42,8 @@ typedef struct pid_data_orig pid_data;
 
 pid_data alloc_data();
 void free_data();
-int parse_state(char *pid_path, pid_data data);
-int parse_vmem(char *pid_path, pid_data data);
-int parse_cmd(char *pid_path, pid_data data);
-int parse_time(char *pid_path, pid_data data);
+int parse_state(const char *pid_path, pid_data data);
+int parse_vmem(const char *pid_path, pid_data data);
+int parse_cmd(const char *pid_path, pid_data data);
+int parse_time(const char *pid_path, pid_data data);
 #endif // PARSER_H

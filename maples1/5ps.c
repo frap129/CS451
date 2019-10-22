@@ -15,46 +15,44 @@
 
 void print_stats(options opts, char *pid_path, char **argv) {
     pid_data data = alloc_data();
-    char *output = malloc(PID_LEN_MAX + CMDLINE_MAX + TIME_LEN_MAX + MEM_LEN_MAX + sizeof(char));
 
-    sprintf(output, "%d: ", opts.pid);
+    printf("%d: ", opts.pid);
 
     if (opts.state) {
         if (parse_state(pid_path, data)) {
             printf("\n%s: error parsing state\n", argv[0]);
             exit(EXIT_FAILURE);
-        }
-        sprintf(output + strlen(output), "%s ", data.state);
+        } else
+            printf("%c ", data.state[0]);
     }
     if (opts.time) {
         if (parse_time(pid_path, data)) {
             printf("\n%s: error parsing time\n", argv[0]);
             exit(EXIT_FAILURE);
-        }
-        sprintf(output + strlen(output), "time=%s ", data.time);
+        } else
+            printf("time=%s ", data.time);
     }
     if (opts.vmem) {
         if (parse_vmem(pid_path, data)) {
             printf("\n%s: error parsing size\n", argv[0]);
             exit(EXIT_FAILURE);
-        }
-        sprintf(output + strlen(output), "sz=%s ", data.vmem);
+        } else
+            printf("sz=%s ", data.vmem);
     }
     if (opts.cmd) {
         if (parse_cmd(pid_path, data)) {
             printf("\n%s: error parsing command\n", argv[0]);
             exit(EXIT_FAILURE);
-        }
-        sprintf(output + strlen(output),"[%s]", data.cmd);
+        } else
+            printf("[%s]", data.cmd);
     }
 
-    // Print output with newline
-    printf("%s\n", output);
+    // Finish output with newline
+    printf("\n");
 
     // Cleanup memory
     free_data(data);
     free(pid_path);
-    free(output);
 }
 
 int main(int argc, char *argv[]) {
@@ -82,6 +80,8 @@ int main(int argc, char *argv[]) {
         exit(EXIT_FAILURE);
     }
 
+    // Collect and print requested stats
     print_stats(opts, pid_path, argv);
+
     return 0;
 }

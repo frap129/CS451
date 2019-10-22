@@ -1,1 +1,11 @@
-tmp
+[UbuntuXPS maples1]: $ ./5ps -p 30449 -c -v -s -t
+30449: S time=0:0:0 sz=145391 [brave]
+
+[UbuntuXPS maples1]: $ ./5ps -p 9058 -c -v
+9058: sz=0 [kworker/2:0-cgroup_destroy]
+
+[UbuntuXPS maples1]: $ ./5ps -p 1 -s -t
+1: S time=0:0:45 
+
+[UbuntuXPS maples1]: $ ./5ps -p 32 -t
+32: time=0:0:0 

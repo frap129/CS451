@@ -11,7 +11,7 @@
 #include <stdlib.h>
 #include "utils.h"
 
-options set_options(int argc, char **argv) {
+options set_options(const int argc, const char **argv) {
 	int getopt_ret; // Create int to store getopts return val
 	options opts = {0, 0, 0, 0, 0}; // Create empty opts struct
 
@@ -56,7 +56,7 @@ int is_opts_empty(const options opts) {
     return 0;
 }
 
-void print_help(char **argv) {
+void print_help(const char **argv) {
     // Print correct usage of program and its options
     printf("\n");
     printf("Usage: %s [options]\n\n", argv[0]);

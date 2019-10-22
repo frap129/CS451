@@ -13,7 +13,7 @@
 #include "parser.h"
 #include "utils.h"
 
-void print_stats(options opts, char *pid_path, char **argv) {
+void print_stats(const options opts, const char *pid_path, const char **argv) {
     // Create and preallocate memory for a data sruct
     pid_data data = alloc_data();
 

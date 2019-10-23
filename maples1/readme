@@ -1,1 +1,20 @@
-tmp
+To compile for debugging:
+    gcc 5ps.c utils.c parser.c -g -Wall -Wextra -o 5ps
+
+To compile:
+    gcc 5ps.c utils.c parser.c -o 5ps
+
+Usage:
+    ./5ps [options]
+
+Options:
+    -p <pid>	Display information about the given process id.
+    -s			Display the processes current state.
+    -t			Display the time the process has consumed.
+    -v			Display the amount of virtual memory used by the process.
+    -c			Display the program that spawned the process.
+
+Notes:
+    - All features described in WritingYourOwnPSWithOptions.pdf are implimented
+    - As discussed in lab, the program name is given rather than command line
+    - Valgrind was used to check for unreported errors and memory leaks

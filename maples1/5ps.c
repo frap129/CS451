@@ -1,7 +1,7 @@
 /*
  * Author: Joseph Maples
  * Assignment Number: 1
- * Date of Submission: TBD
+ * Date of Submission: October 23rd, 2019
  * Name of this file: 5ps.c
  * Description of the program: A simple version of ps that accepts 5 arguments
  */

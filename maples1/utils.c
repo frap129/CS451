@@ -1,7 +1,7 @@
 /*
  * Author: Joseph Maples
  * Assignment Number: 1
- * Date of Submission: TBD
+ * Date of Submission: October 23rd, 2019
  * Name of this file: utils.c
  * Description of the program: Misc utility functions
  */

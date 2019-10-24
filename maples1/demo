@@ -4,7 +4,7 @@
 [UbuntuXPS maples1]: $ ./5ps -p 9058 -c -v
 9058: sz=0 [kworker/2:0-cgroup_destroy]
 
-[UbuntuXPS maples1]: $ ./5ps -p 1 -s -t
+[UbuntuXPS maples1]: $ ./5ps -s -t
 1: S time=0:0:45 
 
 [UbuntuXPS maples1]: $ ./5ps -p 32 -t

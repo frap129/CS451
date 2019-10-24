@@ -1,7 +1,7 @@
 /*
  * Author: Joseph Maples
  * Assignment Number: 1
- * Date of Submission: TBD
+ * Date of Submission: October 23rd, 2019
  * Name of this file: parser.c
  * Description of the program: A group of functions that 
                 handle parsing information from /proc

@@ -21,13 +21,17 @@ void create_child(int num_children){
 
     children[++num_children] = fork();
 
+    char child_num[3];
+    sscanf(child_num, "%d", &num_children);
+
     if (children[num_children] == 0) {
-        execlp("./child", "./child", NULL);
+        execlp("./child", "./child", child_num, NULL);
     } else {
         waitpid(children[num_children], NULL ,0);
         printf("child finished");
    } 
 }
+
 
 /*
     Function Name: main
@@ -39,6 +43,9 @@ void create_child(int num_children){
 int main(__attribute__((unused)) int argc, char **argv) {
     prog_name = malloc(strlen(argv[0]) * sizeof(char));
     strcpy(prog_name, argv[0]);
+
+    process *jobs;
+    jobs = parse_input(argv[1]);
 
     return 0;
 }

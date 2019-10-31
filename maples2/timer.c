@@ -23,9 +23,9 @@ int start_timer() {
 
 	// Create and set sigaction
     struct sigaction sa;
-    memset (&sa, 0, sizeof(sa));
+    memset(&sa, 0, sizeof(sa));
     sa.sa_handler = alarm_handler;
-    sigaction (SIGALRM, &sa, NULL);
+    sigaction(SIGALRM, &sa, NULL);
 
     // Create interval timer
     struct itimerval timer;

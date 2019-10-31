@@ -11,4 +11,7 @@
 // Global variables
 extern char *prog_name;
 
+// Constants
+#define PID_LEN_MAX		(sizeof(char) * 5) /* Length of /proc/sys/kernel/
+                                              pid_max */
 #endif // SCHED_H

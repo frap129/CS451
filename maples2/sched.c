@@ -45,7 +45,7 @@ int child_task() {
     Brief description of the task:
  */
 
-int main(int argc, char **argv) {
+int main(__attribute__((unused)) int argc, char **argv) {
     prog_name = malloc(strlen(argv[0]) * sizeof(char));
     strcpy(prog_name, argv[0]);
 

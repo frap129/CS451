@@ -15,7 +15,7 @@
 #include "timer.h"
 
 
-void alarm_handler(int sigval) {
+void alarm_handler(__attribute__((unused)) int sigval) {
 	printf("BEEP BEEP BEEP WAKE UP\n");
 }
 

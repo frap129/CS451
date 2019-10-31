@@ -9,10 +9,25 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/wait.h>
+#include <unistd.h>
 #include "sched.h"
 #include "parser.h"
 
 char *prog_name;
+pid_t children[10];
+
+void create_child(int num_children){
+
+    children[++num_children] = fork();
+
+    if (children[num_children] == 0) {
+        execlp("./child", "./child", NULL);
+    } else {
+        waitpid(children[num_children], NULL ,0);
+        printf("child finished");
+   } 
+}
 
 /*
     Function Name: main

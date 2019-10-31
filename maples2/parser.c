@@ -31,8 +31,20 @@ process parse_line(const char *line) {
     return parsed;
 }
 
-/*process **parse_input(const char *input_path) {
+process *parse_input(const char *input_path) {
     FILE *input_ptr = fopen(input_path, "r");
     
-    fgets
-}*/
+    process *lines = malloc(10 * PROCESS_SIZE);
+    char *line = malloc(MAX_LINE_LEN * sizeof(char));
+
+    int num_lines = 0;
+    while (fgets(line, MAX_LINE_LEN, input_ptr)) {
+        // Parse line
+        lines[num_lines] = parse_line(line);
+
+        // Erase line
+        strcpy(line, "\0");
+    }
+
+    return lines;
+}

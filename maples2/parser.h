@@ -9,6 +9,9 @@
 #ifndef PARSER_H
 #define PARSER_H
 
+// Constants
+#define MAX_LINE_LEN	50
+#define PROCESS_SIZE	4 * sizeof(int)
 
 // Struct for holding data on a process
 struct process_orig {
@@ -24,4 +27,5 @@ typedef struct process_orig process;
 // Functions publically provided by parser.c
 process empty_process(); // pseudo constructor
 process parse_line(const char *line);
+process *parse_input(const char *input_path);
 #endif // PARSER_H

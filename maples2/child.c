@@ -16,22 +16,23 @@
 
 long long unsigned int highest_prime;
 int child_num;
+int priority;
 pid_t pid;
 
 void sig_handler(int sigval) {
     if (sigval == SIGTSTP) {
-        printf("Process %d: My PID is %d: I am about to be suspended... " 
-                    "Highest prime number I found is %llu.\n", child_num, pid,
-                    highest_prime);
-            pause();
+        printf("Process %d: My priority is %d, my PID is %d: I am about to be "
+                "suspended... Highest prime number I found is %llu.\n", 
+                child_num, priority, pid, highest_prime);
+        pause();
     } else if (sigval == SIGCONT) {
-        printf("Process %d: My PID is %d: I just got resumed " 
-                "Highest prime number I found is %llu.\n", child_num, pid,
-                highest_prime);
+        printf("Process %d: My priority is %d, my PID is %d: I just got "
+                "resumed. Highest prime number I found is %llu.\n",
+                child_num, priority, pid, highest_prime);
     } else if (sigval == SIGTERM) {
-        printf("Process %d: My PID is %d: I completed my task and I am " 
-                "exiting. Highest prime number I found is %llu.\n", child_num,
-                pid, highest_prime);
+        printf("Process %d: My priority is %d, my PID is %d: I completed my "
+                "task and will exit. Highest prime number I found is %llu.\n", 
+                child_num, priority, pid, highest_prime);
         exit(EXIT_SUCCESS);
     }
 }
@@ -51,12 +52,13 @@ int check_prime(long long unsigned int check) {
 int main(__attribute__((unused)) int argc, char **argv) {
     // Set global PID value
     child_num = atoi(argv[1]);
+    priority = atoi(argv[2]);
     pid = getpid();
 
     // Print that we're getting started
-    printf("Process %d: My PID is %d: I just got started. I am starting with " 
-            "the number %u to find the next prime number.\n", child_num, pid,
-             BASE_PRIME);
+    printf("Process %d: My priority is %d, my PID is %d: I just got started. "
+            "I am starting with the number %u to find the next prime number.\n"
+            , child_num, priority, pid, BASE_PRIME);
 
     // Create and set sigaction
     struct sigaction sa;

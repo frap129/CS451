@@ -3,7 +3,8 @@
  * Assignment Number: 2
  * Date of Submission: TBD
  * Name of this file: sched.c
- * Description of the program: A simple priority based scheduler with preemption
+ * Description of the program: A simple priority based scheduler with
+                               preemption
  */
 
 #include <stdio.h>
@@ -17,15 +18,16 @@
 char *prog_name;
 pid_t children[10];
 
-void create_child(int num_children){
-
+void create_child(process *jobs, int num_children){
     children[++num_children] = fork();
 
     char child_num[3];
     sscanf(child_num, "%d", &num_children);
+    char child_prio[3];
+    sscanf(child_prio, "%d", &jobs[num_children].priority);
 
     if (children[num_children] == 0) {
-        execlp("./child", "./child", child_num, NULL);
+        execlp("./child", "./child", child_num, child_prio, NULL);
     } else {
         waitpid(children[num_children], NULL ,0);
         printf("child finished");

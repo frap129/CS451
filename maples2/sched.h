@@ -11,6 +11,4 @@
 // Global variables
 extern char *prog_name;
 
-// Constants
-#define BASE_PRIME		123400003
 #endif // SCHED_H

@@ -34,6 +34,11 @@ process parse_line(const char *line) {
 process *parse_input(const char *input_path) {
     FILE *input_ptr = fopen(input_path, "r");
     
+    if (input_ptr == NULL) {
+        printf("%s: error opening input file.\n", prog_name);
+        exit(EXIT_FAILURE);
+    } 
+
     process *lines = malloc(10 * PROCESS_SIZE);
     char *line = malloc(MAX_LINE_LEN * sizeof(char));
 

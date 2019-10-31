@@ -13,14 +13,16 @@
 #include <sys/time.h>
 #include <unistd.h>
 #include "timer.h"
+#include "sched.h"
 
+unsigned int latest_time;
 
 void alarm_handler(__attribute__((unused)) int sigval) {
-	printf("BEEP BEEP BEEP WAKE UP\n");
+	latest_time++;
+	printf("Scheduler: Time Now: %u seconds\n", latest_time);
 }
 
 int start_timer() {
-
 	// Create and set sigaction
     struct sigaction sa;
     memset(&sa, 0, sizeof(sa));
@@ -35,8 +37,8 @@ int start_timer() {
 
     // Start itimer, error and exit if we can't
     if (setitimer(ITIMER_REAL, &timer, NULL) == -1) {
-        printf("error caused by setitimer");
-        exit(1);
+        printf("%s: error caused by setitimer.\n", prog_name);
+        exit(EXIT_FAILURE);
   }
 
   while (1) {

@@ -10,6 +10,5 @@
 #define TIMER_H
 
 // Functions provided by timer.c
-void alarm_handler(int sigval);
 int start_timer();
 #endif // TIMER_H

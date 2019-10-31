@@ -14,6 +14,7 @@
 #include <unistd.h>
 #include "sched.h"
 #include "parser.h"
+#include "timer.h"
 
 char *prog_name;
 pid_t children[10];
@@ -34,6 +35,17 @@ void create_child(process *jobs, int num_children){
    } 
 }
 
+void suspend_child(pid_t child) {
+	kill(child, SIGTSTP);
+}
+
+void resume_child(pid_t child) {
+	kill(child, SIGCONT);
+}
+
+void kill_child(pid_t child) {
+	kill(child, SIGTERM);
+}
 
 /*
     Function Name: main
@@ -46,8 +58,9 @@ int main(__attribute__((unused)) int argc, char **argv) {
     prog_name = malloc(strlen(argv[0]) * sizeof(char));
     strcpy(prog_name, argv[0]);
 
-    process *jobs;
-    jobs = parse_input(argv[1]);
+    //process *jobs;
+    //jobs = parse_input(argv[1]);
 
+    start_timer();
     return 0;
 }

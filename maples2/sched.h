@@ -8,7 +8,7 @@
 #ifndef SCHED_H
 #define SCHED_H
 
-// Global variables
+// External variables
 extern char *prog_name;
 
 // Constants

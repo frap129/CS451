@@ -12,14 +12,9 @@
 #include "sched.h"
 #include "parser.h"
 
-process empty_process() {
-    process new_process = {0,0,0,0};
-    return new_process;
-}
-
 process parse_line(const char *line) {
     // Create empty process data
-    process parsed = empty_process();
+    process parsed = {0,0,0,0};
 
     // Error if we read less than 4 bytes
     if (sscanf(line, "%d %d %d %d\n", &parsed.proc_num, &parsed.arrival,

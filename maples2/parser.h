@@ -22,6 +22,6 @@ struct process_orig {
 typedef struct process_orig process;
 
 // Functions publically provided by parser.c
-process process(); // pseudo constructor
+process empty_process(); // pseudo constructor
 process parse_line(const char *line);
 #endif // PARSER_H

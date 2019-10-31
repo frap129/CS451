@@ -12,21 +12,27 @@
 #include "sched.h"
 #include "parser.h"
 
-process process() {
+process empty_process() {
     process new_process = {0,0,0,0};
-    return new process;
+    return new_process;
 }
 
 process parse_line(const char *line) {
     // Create empty process data
-    process parsed = process();
+    process parsed = empty_process();
 
     // Error if we read less than 4 bytes
-    if (fscanf(stat_ptr, "%d %d %d %d\n", parsed.proc_num, parsed.arrival
-            parsed.burst, parsed.priority) < 4) {
+    if (sscanf(line, "%d %d %d %d\n", &parsed.proc_num, &parsed.arrival,
+            &parsed.burst, &parsed.priority) < 4) {
         printf("%s: error parsing input file.\n", prog_name);
         exit(EXIT_FAILURE);
     }
 
-    return process;
+    return parsed;
 }
+
+/*process **parse_input(const char *input_path) {
+    FILE *input_ptr = fopen(input_path, "r");
+    
+    fgets
+}*/

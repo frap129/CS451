@@ -14,4 +14,8 @@ extern char *prog_name;
 // Constants
 #define PID_LEN_MAX		(sizeof(char) * 5) /* Length of /proc/sys/kernel/
                                               pid_max */
+#define ARG_LEN_MAX		7
+#define ARG_NUM_MAX		4
+
+int periodic_scheduler(int time);
 #endif // SCHED_H

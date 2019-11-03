@@ -20,6 +20,7 @@ unsigned int latest_time;
 void alarm_handler(__attribute__((unused)) int sigval) {
 	latest_time++;
 	printf("Scheduler: Time Now: %u seconds\n", latest_time);
+	periodic_scheduler(latest_time);
 }
 
 int start_timer() {

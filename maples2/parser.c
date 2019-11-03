@@ -12,6 +12,8 @@
 #include "sched.h"
 #include "parser.h"
 
+int num_jobs;
+
 process parse_line(const char *line) {
     // Create empty process data
     process parsed = {0,0,0,0};
@@ -37,14 +39,18 @@ process *parse_input(const char *input_path) {
     process *lines = malloc(10 * PROCESS_SIZE);
     char *line = malloc(MAX_LINE_LEN * sizeof(char));
 
-    int num_lines = 0;
+    int num_lines = -1;
     while (fgets(line, MAX_LINE_LEN, input_ptr)) {
         // Parse line
+        num_lines++;
         lines[num_lines] = parse_line(line);
 
         // Erase line
         strcpy(line, "\0");
     }
 
+    num_jobs = num_lines + 1;
     return lines;
 }
+
+

@@ -17,23 +17,9 @@
 #include "timer.h"
 
 char *prog_name;
+int running_child;
 pid_t children[10];
-
-void create_child(process *jobs, int num_children){
-    children[++num_children] = fork();
-
-    char child_num[3];
-    sscanf(child_num, "%d", &num_children);
-    char child_prio[3];
-    sscanf(child_prio, "%d", &jobs[num_children].priority);
-
-    if (children[num_children] == 0) {
-        execlp("./child", "./child", child_num, child_prio, NULL);
-    } else {
-        waitpid(children[num_children], NULL ,0);
-        printf("child finished");
-   } 
-}
+process *jobs;
 
 void suspend_child(pid_t child) {
 	kill(child, SIGTSTP);
@@ -47,6 +33,101 @@ void kill_child(pid_t child) {
 	kill(child, SIGTERM);
 }
 
+void create_child(process new_job){
+	if (running_child != 0)
+		suspend_child(running_child);
+
+    children[new_job.proc_num] = fork();
+    running_child = new_job.proc_num;
+
+    char child_num[ARG_LEN_MAX];
+    sscanf(child_num, "%d", &new_job.proc_num);
+    char child_prio[ARG_LEN_MAX];
+    sscanf(child_prio, "%d", &new_job.priority);
+
+    char *args[ARG_NUM_MAX] = {"./child", child_num, child_prio, NULL};
+
+    if (children[new_job.proc_num] == 0)
+        execv("./child", args);
+
+    waitpid(children[new_job.proc_num], NULL, WNOHANG);
+}
+
+void check_complete() {
+    // Check if all processes are done
+    if (running_child == -1) {
+        for (int i = 0; i < num_jobs; i++)
+            if (jobs[i].burst != 0)
+                return;
+        exit(EXIT_SUCCESS);
+    }
+}
+
+void check_current_job_done() {
+    // Start by seeing if current job is done
+    if (running_child != -1) {
+        jobs[running_child].burst--;
+        if (jobs[running_child].burst == 0) {
+            kill_child(children[running_child]);
+            children[running_child] = 0;
+            running_child = -1;
+        }
+    }
+}
+
+int periodic_scheduler(int time) {
+    check_current_job_done();
+
+	// Find new jobs to launch
+	int new_children[num_jobs];
+	int num_new_jobs = 0;
+	for (int i = 0; i < num_jobs; i++) {
+		if (jobs[i].arrival == time) {
+			new_children[num_new_jobs] = jobs[i].proc_num;
+			num_new_jobs++;
+		}
+	}
+
+    // IF there arent any new jobs, check if done
+    if (num_new_jobs == 0) 
+        check_complete();
+
+    // Compare priorities of existing jobs
+   	process top_proc;
+    if (running_child != -1)
+        top_proc = jobs[running_child];
+    else {
+        top_proc.priority = 100;
+        for (int i = 0; i < num_jobs; i++)
+            if (children[i] != 0)
+                top_proc = jobs[i].priority < top_proc.priority ?
+                    jobs[i] : top_proc;
+    }
+
+    // Compare priorities of new jobs
+    if (num_new_jobs != 0)
+        for (int i = 0; i < num_new_jobs; i++) {
+            if (jobs[new_children[i]].priority < top_proc.priority &&
+                jobs[new_children[i]].burst != 0)
+       	        top_proc = jobs[new_children[i]];
+        }
+
+    // Handle state of children
+    if (running_child != top_proc.proc_num) {
+        if (running_child != -1)
+        	suspend_child(children[running_child]);
+
+        if (children[top_proc.proc_num] == 0)
+            create_child(top_proc);
+        else {
+        	resume_child(children[top_proc.proc_num]);
+            running_child = top_proc.proc_num;
+        }
+    }
+
+    return 0;
+}
+
 /*
     Function Name: main
     Input to the method: Number of arguments passed and the list of arguments
@@ -58,9 +139,8 @@ int main(__attribute__((unused)) int argc, char **argv) {
     prog_name = malloc(strlen(argv[0]) * sizeof(char));
     strcpy(prog_name, argv[0]);
 
-    //process *jobs;
-    //jobs = parse_input(argv[1]);
-
+    jobs = parse_input(argv[1]);
+    running_child = -1;
     start_timer();
     return 0;
 }

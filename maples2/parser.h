@@ -13,6 +13,10 @@
 #define MAX_LINE_LEN	50
 #define PROCESS_SIZE	4 * sizeof(int)
 
+
+// External variables
+extern int num_jobs;
+
 // Struct for holding data on a process
 struct process_orig {
 	int proc_num;

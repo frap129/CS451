@@ -51,7 +51,7 @@ process *parse_input(const char *input_path) {
     
     fclose(input_ptr);
 
-    num_jobs = num_lines - 1;
+    num_jobs = num_lines;
     return lines;
 }
 

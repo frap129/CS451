@@ -36,7 +36,7 @@ process *parse_input(const char *input_path) {
         exit(EXIT_FAILURE);
     } 
 
-    process *lines = malloc(10 * PROCESS_SIZE);
+    process *lines = malloc(MAX_JOBS * PROCESS_SIZE);
     char *line = malloc(MAX_LINE_LEN * sizeof(char));
 
     int num_lines = 0;

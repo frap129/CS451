@@ -18,7 +18,7 @@
 
 char *prog_name;
 int running_child;
-pid_t children[10];
+pid_t children[MAX_JOBS];
 process *jobs;
 
 void suspend_child(pid_t child) {
@@ -39,33 +39,34 @@ void kill_child(pid_t child) {
 	    kill(child, SIGTERM);
 }
 
-void create_child(process new_job){
+void create_child(int new_job){
     // Suspend current runnign child before forking
 	if (running_child != NO_PROCESS)
 		suspend_child(running_child);
 
     // Fork the new job and save its pid and proc_num
-    children[new_job.proc_num] = fork();
-    running_child = new_job.proc_num;
+    children[new_job] = fork();
+    running_child = new_job;
 
     // Convert proc_num and priority to strings
     char child_num[ARG_LEN_MAX];
-    sprintf(child_num, "%d", new_job.proc_num);
+    sprintf(child_num, "%d", jobs[new_job].proc_num);
     char child_prio[ARG_LEN_MAX];
-    sprintf(child_prio, "%d", new_job.priority);
+    sprintf(child_prio, "%d", jobs[new_job].priority);
 
     // Create 2d array of arguments
     char *args[ARG_NUM_MAX] = {"./child", child_num, child_prio, NULL};
 
     // If we're in the child, run the child executable
-    if (children[new_job.proc_num] == 0) {
+    if (children[new_job] == 0) {
         execv("./child", args);
-        printf("%s: error executing process %d", prog_name, new_job.proc_num);
+        printf("%s: error executing process %d", prog_name,
+                jobs[new_job].proc_num);
         exit(EXIT_FAILURE);
     }
 
     // Let the parent wait on the child
-    waitpid(children[new_job.proc_num], NULL, WNOHANG);
+    waitpid(children[new_job], NULL, WNOHANG);
 }
 
 void check_complete() {
@@ -99,46 +100,53 @@ int periodic_scheduler(int time) {
 	int new_children[num_jobs];
 	int num_new_jobs = 0;
 	for (int i = 0; i < num_jobs; i++) {
-		if (jobs[i].arrival <= time) {
-			new_children[num_new_jobs] = jobs[i].proc_num;
+		if (jobs[i].arrival <= time && jobs[i].burst > 0) {
+			new_children[num_new_jobs] = i;
 			num_new_jobs++;
 		}
 	}
 
-    // IF there arent any new jobs, check if done
+    // If there arent any new jobs, check if done
     if (num_new_jobs == 0) 
         check_complete();
 
     // Compare priorities of existing jobs
-   	process top_proc;
+   	int top_proc = NO_PROCESS;
     if (running_child != NO_PROCESS)
-        top_proc = jobs[running_child];
+        top_proc = running_child;
     else {
-        top_proc.priority = 100;
         for (int i = 0; i < num_jobs; i++)
-            if (children[i] != 0)
-                top_proc = jobs[i].priority < top_proc.priority ?
-                    jobs[i] : top_proc;
+            if (children[i] != 0) {
+                if (top_proc == NO_PROCESS)
+                    top_proc = i;
+
+                top_proc = jobs[i].priority < jobs[top_proc].priority ?
+                    i : top_proc;
+            }
     }
 
     // Compare priorities of new jobs
-    if (num_new_jobs != 0)
+    if (num_new_jobs != 0) {
+        if (top_proc == NO_PROCESS)
+            top_proc = new_children[0];
+
         for (int i = 0; i < num_new_jobs; i++) {
-            if (jobs[new_children[i]].priority < top_proc.priority &&
+            if (jobs[new_children[i]].priority < jobs[top_proc].priority &&
                 jobs[new_children[i]].burst > 0)
-       	        top_proc = jobs[new_children[i]];
+       	        top_proc = new_children[i];
         }
+    }
 
     // Handle state of children
-    if (running_child != top_proc.proc_num) {
+    if (running_child != top_proc && top_proc != NO_PROCESS) {
         if (running_child != NO_PROCESS)
         	suspend_child(children[running_child]);
 
-        if (children[top_proc.proc_num] == 0)
+        if (children[top_proc] == 0)
             create_child(top_proc);
         else {
-        	resume_child(children[top_proc.proc_num]);
-            running_child = top_proc.proc_num;
+        	resume_child(children[top_proc]);
+            running_child = top_proc;
         }
     }
 

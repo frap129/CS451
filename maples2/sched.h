@@ -17,6 +17,8 @@ extern char *prog_name;
 #define ARG_LEN_MAX		7
 #define ARG_NUM_MAX		4
 #define NO_PROCESS		-1
+#define MAX_PRIORITY	100
+#define MAX_JOBS		10
 
 int periodic_scheduler(int time);
 #endif // SCHED_H

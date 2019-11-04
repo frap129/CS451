@@ -22,34 +22,43 @@ pid_t children[10];
 process *jobs;
 
 void suspend_child(pid_t child) {
+    // Send SIGTSTP to the child
 	kill(child, SIGTSTP);
 }
 
 void resume_child(pid_t child) {
+    // Send SIGCONT to the child
 	kill(child, SIGCONT);
 }
 
 void kill_child(pid_t child) {
+    // Send SIGTERM to the child
 	kill(child, SIGTERM);
 }
 
 void create_child(process new_job){
+    // Suspend current runnign child before forking
 	if (running_child != NOTHING_RUNNING)
 		suspend_child(running_child);
 
+    // Fork the new job and save its pid and proc_num
     children[new_job.proc_num] = fork();
     running_child = new_job.proc_num;
 
+    // Convert proc_num and priority to strings
     char child_num[ARG_LEN_MAX];
     sprintf(child_num, "%d", new_job.proc_num);
     char child_prio[ARG_LEN_MAX];
     sprintf(child_prio, "%d", new_job.priority);
 
+    // Create 2d array of arguments
     char *args[ARG_NUM_MAX] = {"./child", child_num, child_prio, NULL};
 
+    // If we're in the child, run the child executable
     if (children[new_job.proc_num] == 0)
         execv("./child", args);
 
+    // Let the parent wait on the child
     waitpid(children[new_job.proc_num], NULL, WNOHANG);
 }
 
@@ -58,8 +67,9 @@ void check_complete() {
     if (running_child == NOTHING_RUNNING) {
         for (int i = 0; i < num_jobs; i++)
             if (jobs[i].burst != 0)
-                return;
-        exit(EXIT_SUCCESS);
+                return; // Return if a job still has a burst
+        // Exit if all jobs have completed their burst
+        exit(EXIT_SUCCESS); 
     }
 }
 
@@ -68,6 +78,7 @@ void check_current_job_done() {
     if (running_child != NOTHING_RUNNING) {
         jobs[running_child].burst--;
         if (jobs[running_child].burst == 0) {
+            // Kill child if job is dune
             kill_child(children[running_child]);
             children[running_child] = 0;
             running_child = NOTHING_RUNNING;

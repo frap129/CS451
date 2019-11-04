@@ -34,7 +34,7 @@ void kill_child(pid_t child) {
 }
 
 void create_child(process new_job){
-	if (running_child != 0)
+	if (running_child != NOTHING_RUNNING)
 		suspend_child(running_child);
 
     children[new_job.proc_num] = fork();
@@ -56,7 +56,7 @@ void create_child(process new_job){
 
 void check_complete() {
     // Check if all processes are done
-    if (running_child == -1) {
+    if (running_child == NOTHING_RUNNING) {
         for (int i = 0; i < num_jobs; i++)
             if (jobs[i].burst != 0)
                 return;
@@ -66,12 +66,12 @@ void check_complete() {
 
 void check_current_job_done() {
     // Start by seeing if current job is done
-    if (running_child != -1) {
+    if (running_child != NOTHING_RUNNING) {
         jobs[running_child].burst--;
         if (jobs[running_child].burst == 0) {
             kill_child(children[running_child]);
             children[running_child] = 0;
-            running_child = -1;
+            running_child = NOTHING_RUNNING;
         }
     }
 }
@@ -95,7 +95,7 @@ int periodic_scheduler(int time) {
 
     // Compare priorities of existing jobs
    	process top_proc;
-    if (running_child != -1)
+    if (running_child != NOTHING_RUNNING)
         top_proc = jobs[running_child];
     else {
         top_proc.priority = 100;
@@ -115,7 +115,7 @@ int periodic_scheduler(int time) {
 
     // Handle state of children
     if (running_child != top_proc.proc_num) {
-        if (running_child != -1)
+        if (running_child != NOTHING_RUNNING)
         	suspend_child(children[running_child]);
 
         if (children[top_proc.proc_num] == 0)
@@ -141,7 +141,7 @@ int main(__attribute__((unused)) int argc, char **argv) {
     strcpy(prog_name, argv[0]);
 
     jobs = parse_input(argv[1]);
-    running_child = -1;
+    running_child = NOTHING_RUNNING;
     start_timer();
     return 0;
 }

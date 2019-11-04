@@ -16,6 +16,7 @@ extern char *prog_name;
                                               pid_max */
 #define ARG_LEN_MAX		7
 #define ARG_NUM_MAX		4
+#define NOTHING_RUNNING	-1
 
 int periodic_scheduler(int time);
 #endif // SCHED_H

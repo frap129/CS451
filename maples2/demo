@@ -1,1 +1,83 @@
-tmp
+[UbuntuXPS maples2]: $ ./sched input    
+Scheduler: Time Now: 1 seconds
+Process 1: My priority is 2, my PID is 22270: I just got started. I am starting with the number 1234000031 to find the next prime number.
+Scheduler: Time Now: 2 seconds
+Scheduler: Time Now: 3 seconds
+Scheduler: Time Now: 4 seconds
+Scheduler: Time Now: 5 seconds
+Process 1: My priority is 2, my PID is 22270: I completed my task and will exit. Highest prime number I found is 1234218239.
+Process 2: My priority is 3, my PID is 22271: I just got started. I am starting with the number 1234000031 to find the next prime number.
+Scheduler: Time Now: 6 seconds
+Scheduler: Time Now: 7 seconds
+Scheduler: Time Now: 8 seconds
+Scheduler: Time Now: 9 seconds
+Process 2: My priority is 3, my PID is 22271: I completed my task and will exit. Highest prime number I found is 1234220167.
+Process 0: My priority is 4, my PID is 22297: I just got started. I am starting with the number 1234000031 to find the next prime number.
+Scheduler: Time Now: 10 seconds
+Process 0: My priority is 4, my PID is 22297: I am about to be suspended... Highest prime number I found is 1234055569.
+Process 3: My priority is 1, my PID is 22298: I just got started. I am starting with the number 1234000031 to find the next prime number.
+Scheduler: Time Now: 11 seconds
+Scheduler: Time Now: 12 seconds
+Scheduler: Time Now: 13 seconds
+Scheduler: Time Now: 14 seconds
+Process 3: My priority is 1, my PID is 22298: I completed my task and will exit. Highest prime number I found is 1234219981.
+Process 9: My priority is 2, my PID is 22324: I just got started. I am starting with the number 1234000031 to find the next prime number.
+Scheduler: Time Now: 15 seconds
+Scheduler: Time Now: 16 seconds
+Scheduler: Time Now: 17 seconds
+Scheduler: Time Now: 18 seconds
+Scheduler: Time Now: 19 seconds
+Scheduler: Time Now: 20 seconds
+Scheduler: Time Now: 21 seconds
+Scheduler: Time Now: 22 seconds
+Scheduler: Time Now: 23 seconds
+Scheduler: Time Now: 24 seconds
+Process 9: My priority is 2, my PID is 22324: I completed my task and will exit. Highest prime number I found is 1234548703.
+Process 0: My priority is 4, my PID is 22297: I just got resumed. Highest prime number I found is 1234055569.
+Scheduler: Time Now: 25 seconds
+Process 0: My priority is 4, my PID is 22297: I am about to be suspended... Highest prime number I found is 1234110377.
+Process 8: My priority is 3, my PID is 22379: I just got started. I am starting with the number 1234000031 to find the next prime number.
+Scheduler: Time Now: 26 seconds
+Scheduler: Time Now: 27 seconds
+Scheduler: Time Now: 28 seconds
+Scheduler: Time Now: 29 seconds
+Scheduler: Time Now: 30 seconds
+Scheduler: Time Now: 31 seconds
+Scheduler: Time Now: 32 seconds
+Scheduler: Time Now: 33 seconds
+Scheduler: Time Now: 34 seconds
+Process 8: My priority is 3, my PID is 22379: I completed my task and will exit. Highest prime number I found is 1234495909.
+Process 0: My priority is 4, my PID is 22297: I just got resumed. Highest prime number I found is 1234110377.
+Scheduler: Time Now: 35 seconds
+Scheduler: Time Now: 36 seconds
+Scheduler: Time Now: 37 seconds
+Scheduler: Time Now: 38 seconds
+Scheduler: Time Now: 39 seconds
+Scheduler: Time Now: 40 seconds
+Process 0: My priority is 4, my PID is 22297: I completed my task and will exit. Highest prime number I found is 1234440547.
+Process 7: My priority is 5, my PID is 22455: I just got started. I am starting with the number 1234000031 to find the next prime number.
+Scheduler: Time Now: 41 seconds
+Scheduler: Time Now: 42 seconds
+Scheduler: Time Now: 43 seconds
+Scheduler: Time Now: 44 seconds
+Scheduler: Time Now: 45 seconds
+Scheduler: Time Now: 46 seconds
+Scheduler: Time Now: 47 seconds
+Process 7: My priority is 5, my PID is 22455: I completed my task and will exit. Highest prime number I found is 1234384231.
+Process 6: My priority is 7, my PID is 22509: I just got started. I am starting with the number 1234000031 to find the next prime number.
+Scheduler: Time Now: 48 seconds
+Scheduler: Time Now: 49 seconds
+Scheduler: Time Now: 50 seconds
+Scheduler: Time Now: 51 seconds
+Scheduler: Time Now: 52 seconds
+Process 6: My priority is 7, my PID is 22509: I completed my task and will exit. Highest prime number I found is 1234274557.
+Process 5: My priority is 8, my PID is 22535: I just got started. I am starting with the number 1234000031 to find the next prime number.
+Scheduler: Time Now: 53 seconds
+Scheduler: Time Now: 54 seconds
+Process 5: My priority is 8, my PID is 22535: I completed my task and will exit. Highest prime number I found is 1234109711.
+Process 4: My priority is 12, my PID is 22536: I just got started. I am starting with the number 1234000031 to find the next prime number.
+Scheduler: Time Now: 55 seconds
+Scheduler: Time Now: 56 seconds
+Scheduler: Time Now: 57 seconds
+Scheduler: Time Now: 58 seconds
+Process 4: My priority is 12, my PID is 22536: I completed my task and will exit. Highest prime number I found is 1234220123.

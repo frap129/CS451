@@ -41,9 +41,9 @@ void create_child(process new_job){
     running_child = new_job.proc_num;
 
     char child_num[ARG_LEN_MAX];
-    sscanf(child_num, "%d", &new_job.proc_num);
+    sprintf(child_num, "%d", new_job.proc_num);
     char child_prio[ARG_LEN_MAX];
-    sscanf(child_prio, "%d", &new_job.priority);
+    sprintf(child_prio, "%d", new_job.priority);
 
     char *args[ARG_NUM_MAX] = {"./child", child_num, child_prio, NULL};
 

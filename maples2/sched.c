@@ -55,8 +55,11 @@ void create_child(process new_job){
     char *args[ARG_NUM_MAX] = {"./child", child_num, child_prio, NULL};
 
     // If we're in the child, run the child executable
-    if (children[new_job.proc_num] == 0)
+    if (children[new_job.proc_num] == 0) {
         execv("./child", args);
+        printf("%s: error executing process %d", prog_name, new_job.proc_num);
+        exit(EXIT_FAILURE);
+    }
 
     // Let the parent wait on the child
     waitpid(children[new_job.proc_num], NULL, WNOHANG);

@@ -72,7 +72,7 @@ void check_complete() {
     // Check if all processes are done
     if (running_child == NOTHING_RUNNING) {
         for (int i = 0; i < num_jobs; i++)
-            if (jobs[i].burst != 0)
+            if (jobs[i].burst > 0)
                 return; // Return if a job still has a burst
         // Exit if all jobs have completed their burst
         exit(EXIT_SUCCESS); 
@@ -83,7 +83,7 @@ void check_current_job_done() {
     // Start by seeing if current job is done
     if (running_child != NOTHING_RUNNING) {
         jobs[running_child].burst--;
-        if (jobs[running_child].burst == 0) {
+        if (jobs[running_child].burst <= 0) {
             // Kill child if job is dune
             kill_child(children[running_child]);
             children[running_child] = 0;
@@ -125,7 +125,7 @@ int periodic_scheduler(int time) {
     if (num_new_jobs != 0)
         for (int i = 0; i < num_new_jobs; i++) {
             if (jobs[new_children[i]].priority < top_proc.priority &&
-                jobs[new_children[i]].burst != 0)
+                jobs[new_children[i]].burst > 0)
        	        top_proc = jobs[new_children[i]];
         }
 

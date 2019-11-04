@@ -20,21 +20,28 @@ int priority;
 pid_t pid;
 
 void sig_handler(int sigval) {
-    if (sigval == SIGTSTP) {
-        printf("Process %d: My priority is %d, my PID is %d: I am about to be "
-                "suspended... Highest prime number I found is %llu.\n", 
-                child_num, priority, pid, highest_prime);
-        pause();
-    } else if (sigval == SIGCONT) {
-        printf("Process %d: My priority is %d, my PID is %d: I just got "
-                "resumed. Highest prime number I found is %llu.\n",
-                child_num, priority, pid, highest_prime);
-    } else if (sigval == SIGTERM) {
-        printf("Process %d: My priority is %d, my PID is %d: I completed my "
-                "task and will exit. Highest prime number I found is %llu.\n", 
-                child_num, priority, pid, highest_prime);
-        exit(EXIT_SUCCESS);
-    }
+    switch(sigval) {
+        case SIGTSTP:
+            printf("Process %d: My priority is %d, my PID is %d: I am about to"
+                    " be suspended... Highest prime number I found is %llu.\n",
+                    child_num, priority, pid, highest_prime);
+            pause();
+            break;
+        case SIGCONT:
+            printf("Process %d: My priority is %d, my PID is %d: I just got"
+                    " resumed. Highest prime number I found is %llu.\n",
+                    child_num, priority, pid, highest_prime);
+            break;
+        case SIGTERM:
+            printf("Process %d: My priority is %d, my PID is %d: I completed"
+                    " my task and will exit. Highest prime number I found is "
+                    "%llu.\n", child_num, priority, pid, highest_prime);
+            exit(EXIT_SUCCESS);
+            break;
+        default:
+            //Ignore other signals
+            break;
+    } 
 }
 
 int check_prime(long long unsigned int check) {

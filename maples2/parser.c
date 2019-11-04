@@ -55,10 +55,11 @@ process *parse_input(const char *input_path) {
     
     // Close pointer
     fclose(input_ptr);
+    free(line);
 
     // Make the total number of jobs globally available
     num_jobs = num_lines;
-    
+
     return lines;
 }
 

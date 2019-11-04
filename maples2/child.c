@@ -6,15 +6,18 @@
  * Description of the program: Prime checking algorithms for child processes.
  */
 
+#include <math.h>
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 
-#define BASE_PRIME    123400003
+#define BASE_PRIME	1234000031
+#define MAX_RANGE   10000
+#define LLU		long long unsigned
 
-long long unsigned int highest_prime;
+LLU int highest_prime;
 int child_num;
 int priority;
 pid_t pid;
@@ -45,8 +48,10 @@ void sig_handler(int sigval) {
 }
 
 int check_prime(long long unsigned int check) {
-    long long unsigned int range = check / 2;
-    long long unsigned int i = 2; 
+    // Determine our range of 3 to sqrt(n)
+    LLU int range = sqrt(check);
+    LLU int i = 2; 
+
     int prime = 1; 
     while (prime == 1 && i <= range) { 
         if (check % i == 0) 
@@ -76,14 +81,16 @@ int main(__attribute__((unused)) int argc, char **argv) {
     sigaction (SIGTERM, &sa, NULL);
 
     int num_printed = 0;
-    long long unsigned int num_to_check = BASE_PRIME + 1; 
-    while (num_printed < 100) {
-        if (check_prime(num_to_check) == 1) {
+    LLU int num_to_check = BASE_PRIME; 
+    while (num_printed < MAX_RANGE) {
+        if (check_prime(num_to_check)) {
             printf("prime number is %llu \n", num_to_check);
             highest_prime = num_to_check;
             num_printed++;
         }
-        num_to_check++; 
+
+        // Add 2 to skip even numbers
+        num_to_check += 2; 
     }
 
 }

@@ -11,7 +11,7 @@ clean:
 build:
 	@echo "Compiling..." $<
 	@gcc $(NAME).c $(NAME2).c $(NAME3).c -g -Wall -Wextra -o $(NAME) $<
-	@gcc $(NAME4).c -g -Wall -Wextra -o $(NAME4) $<
+	@gcc $(NAME4).c -g -lm -Wall -Wextra -o $(NAME4) $<
 
 
 	@echo "Zipping..." $<

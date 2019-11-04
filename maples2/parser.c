@@ -39,17 +39,19 @@ process *parse_input(const char *input_path) {
     process *lines = malloc(10 * PROCESS_SIZE);
     char *line = malloc(MAX_LINE_LEN * sizeof(char));
 
-    int num_lines = -1;
+    int num_lines = 0;
     while (fgets(line, MAX_LINE_LEN, input_ptr)) {
         // Parse line
-        num_lines++;
         lines[num_lines] = parse_line(line);
+        num_lines++;
 
         // Erase line
         strcpy(line, "\0");
     }
+    
+    fclose(input_ptr);
 
-    num_jobs = num_lines + 1;
+    num_jobs = num_lines - 1;
     return lines;
 }
 

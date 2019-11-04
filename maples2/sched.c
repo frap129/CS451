@@ -51,6 +51,7 @@ void create_child(process new_job){
         execv("./child", args);
 
     waitpid(children[new_job.proc_num], NULL, WNOHANG);
+    free(args);
 }
 
 void check_complete() {

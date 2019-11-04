@@ -23,6 +23,7 @@ int priority;
 pid_t pid;
 
 void sig_handler(int sigval) {
+    // Handle SIGTSTP, SIGCONT, and SIGTERM
     switch(sigval) {
         case SIGTSTP:
             printf("Process %d: My priority is %d, my PID is %d: I am about to"
@@ -48,16 +49,18 @@ void sig_handler(int sigval) {
 }
 
 int check_prime(long long unsigned int check) {
-    // Determine our range of 3 to sqrt(n)
-    LLU int range = sqrt(check);
+    // Determine our range of 2 to sqrt(n)
+    LLU int range = sqrt(check); // truncated on purpose
     LLU int i = 2; 
 
+    // Check the remainder of 2 to sqrt(n)
     int prime = 1;
     while (prime == 1 && i <= range) { 
         if (check % i == 0) 
             prime = 0;
         i++;
     } 
+
     return (prime);
 }
 
@@ -80,12 +83,14 @@ int main(__attribute__((unused)) int argc, char **argv) {
     sigaction (SIGCONT, &sa, NULL);
     sigaction (SIGTERM, &sa, NULL);
 
-    int num_printed = 0;
+    // Check all numbers from BASE_PRIME to BASE_PRIME+2*MAX_RANGE
+    int num_found = 0;
     LLU int num_to_check = BASE_PRIME; 
-    while (num_printed < MAX_RANGE) {
+    while (num_found < MAX_RANGE) {
+        // If number is prime, increment num_found and save it
         if (check_prime(num_to_check)) {
             highest_prime = num_to_check;
-            num_printed++;
+            num_found++;
         }
 
         // Add 2 to skip even numbers

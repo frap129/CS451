@@ -17,7 +17,7 @@
 #include "timer.h"
 
 char *prog_name;
-int running_child;
+int running_child = NO_PROCESS;
 pid_t children[MAX_JOBS];
 process *jobs;
 
@@ -74,7 +74,8 @@ void check_complete() {
     if (running_child == NO_PROCESS) {
         for (int i = 0; i < num_jobs; i++)
             if (jobs[i].burst > 0)
-                return; // Return if a job still has a burst
+                return; // Return if a job still has a burst]
+
         // Exit if all jobs have completed their burst
         exit(EXIT_SUCCESS); 
     }
@@ -117,6 +118,7 @@ int periodic_scheduler(int time) {
     else {
         for (int i = 0; i < num_jobs; i++)
             if (children[i] != 0) {
+                // Set top_proc if not already set
                 if (top_proc == NO_PROCESS)
                     top_proc = i;
 
@@ -127,6 +129,7 @@ int periodic_scheduler(int time) {
 
     // Compare priorities of new jobs
     if (num_new_jobs != 0) {
+        // Set top_proc if not already set
         if (top_proc == NO_PROCESS)
             top_proc = new_children[0];
 
@@ -161,11 +164,12 @@ int periodic_scheduler(int time) {
  */
 
 int main(__attribute__((unused)) int argc, char **argv) {
+    // Make the name of this executable globally accessible
     prog_name = malloc(strlen(argv[0]) * sizeof(char));
     strcpy(prog_name, argv[0]);
 
     jobs = parse_input(argv[1]);
-    running_child = NO_PROCESS;
+
     start_timer();
     return 0;
 }

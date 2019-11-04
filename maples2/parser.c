@@ -29,16 +29,20 @@ process parse_line(const char *line) {
 }
 
 process *parse_input(const char *input_path) {
+    // Get pointer to input file
     FILE *input_ptr = fopen(input_path, "r");
     
+    // Check if pointer was acquired
     if (input_ptr == NULL) {
         printf("%s: error opening input file.\n", prog_name);
         exit(EXIT_FAILURE);
     } 
 
+    // Create storage for input values
     process *lines = malloc(MAX_JOBS * PROCESS_SIZE);
     char *line = malloc(MAX_LINE_LEN * sizeof(char));
 
+    // Get all lines of input
     int num_lines = 0;
     while (fgets(line, MAX_LINE_LEN, input_ptr)) {
         // Parse line
@@ -49,9 +53,12 @@ process *parse_input(const char *input_path) {
         strcpy(line, "\0");
     }
     
+    // Close pointer
     fclose(input_ptr);
 
+    // Make the total number of jobs globally available
     num_jobs = num_lines;
+    
     return lines;
 }
 

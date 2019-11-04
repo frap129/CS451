@@ -9,16 +9,16 @@
 #define SCHED_H
 
 // External variables
-extern char *prog_name;
+extern char *prog_name; // For error printing
 
 // Constants
+#define ARG_LEN_MAX		7 // Length of "./child"
+#define ARG_NUM_MAX		4 // 4 arguments get passed to the child
+#define NO_PROCESS		-1 // Just a sentinel value
+#define MAX_PRIORITY	100 // No priority should be greater than 100
+#define MAX_JOBS		10 // Only 10 jobs can be parsed at once
 #define PID_LEN_MAX		(sizeof(char) * 5) /* Length of /proc/sys/kernel/
                                               pid_max */
-#define ARG_LEN_MAX		7
-#define ARG_NUM_MAX		4
-#define NO_PROCESS		-1
-#define MAX_PRIORITY	100
-#define MAX_JOBS		10
-
+// Functions provided by sched.c
 int periodic_scheduler(int time);
 #endif // SCHED_H

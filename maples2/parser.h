@@ -10,9 +10,8 @@
 #define PARSER_H
 
 // Constants
-#define MAX_LINE_LEN	50
-#define PROCESS_SIZE	4 * sizeof(int)
-
+#define MAX_LINE_LEN	50 // Just an estimate, not sure of actual
+#define PROCESS_SIZE	4 * sizeof(int) // size of the process struct
 
 // External variables
 extern int num_jobs;
@@ -28,7 +27,7 @@ struct process_orig {
 // Typedef struct so it can be used like an object
 typedef struct process_orig process;
 
-// Functions publically provided by parser.c
+// Functions provided by parser.c
 process parse_line(const char *line);
 process *parse_input(const char *input_path);
 #endif // PARSER_H

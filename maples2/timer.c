@@ -18,13 +18,16 @@
 unsigned int latest_time;
 
 void alarm_handler(__attribute__((unused)) int sigval) {
-	latest_time++;
-	printf("Scheduler: Time Now: %u seconds\n", latest_time);
-	periodic_scheduler(latest_time);
+    // Keep track of time
+	  latest_time++;
+    printf("Scheduler: Time Now: %u seconds\n", latest_time);
+
+    // Execute the scheduler
+	  periodic_scheduler(latest_time);
 }
 
 int start_timer() {
-	// Create and set sigaction
+	  // Create and set sigaction
     struct sigaction sa;
     memset(&sa, 0, sizeof(sa));
     sa.sa_handler = alarm_handler;
@@ -40,9 +43,9 @@ int start_timer() {
     if (setitimer(ITIMER_REAL, &timer, NULL) == -1) {
         printf("%s: error caused by setitimer.\n", prog_name);
         exit(EXIT_FAILURE);
-  }
+    }
 
-  while (1) {
-  	//wait for timer
-  }
+    while (1) {
+  	  //wait for timer
+    }
 }

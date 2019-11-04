@@ -93,7 +93,7 @@ int periodic_scheduler(int time) {
 	int new_children[num_jobs];
 	int num_new_jobs = 0;
 	for (int i = 0; i < num_jobs; i++) {
-		if (jobs[i].arrival == time) {
+		if (jobs[i].arrival <= time) {
 			new_children[num_new_jobs] = jobs[i].proc_num;
 			num_new_jobs++;
 		}

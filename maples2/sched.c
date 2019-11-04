@@ -23,17 +23,20 @@ process *jobs;
 
 void suspend_child(pid_t child) {
     // Send SIGTSTP to the child
-	kill(child, SIGTSTP);
+    if (child != 0)
+        kill(child, SIGTSTP);
 }
 
 void resume_child(pid_t child) {
     // Send SIGCONT to the child
-	kill(child, SIGCONT);
+    if (child != 0)
+        kill(child, SIGCONT);
 }
 
 void kill_child(pid_t child) {
     // Send SIGTERM to the child
-	kill(child, SIGTERM);
+    if (child != 0)
+	    kill(child, SIGTERM);
 }
 
 void create_child(process new_job){

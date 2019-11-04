@@ -41,7 +41,7 @@ void kill_child(pid_t child) {
 
 void create_child(process new_job){
     // Suspend current runnign child before forking
-	if (running_child != NOTHING_RUNNING)
+	if (running_child != NO_PROCESS)
 		suspend_child(running_child);
 
     // Fork the new job and save its pid and proc_num
@@ -70,7 +70,7 @@ void create_child(process new_job){
 
 void check_complete() {
     // Check if all processes are done
-    if (running_child == NOTHING_RUNNING) {
+    if (running_child == NO_PROCESS) {
         for (int i = 0; i < num_jobs; i++)
             if (jobs[i].burst > 0)
                 return; // Return if a job still has a burst
@@ -81,13 +81,13 @@ void check_complete() {
 
 void check_current_job_done() {
     // Start by seeing if current job is done
-    if (running_child != NOTHING_RUNNING) {
+    if (running_child != NO_PROCESS) {
         jobs[running_child].burst--;
         if (jobs[running_child].burst <= 0) {
             // Kill child if job is dune
             kill_child(children[running_child]);
             children[running_child] = 0;
-            running_child = NOTHING_RUNNING;
+            running_child = NO_PROCESS;
         }
     }
 }
@@ -111,7 +111,7 @@ int periodic_scheduler(int time) {
 
     // Compare priorities of existing jobs
    	process top_proc;
-    if (running_child != NOTHING_RUNNING)
+    if (running_child != NO_PROCESS)
         top_proc = jobs[running_child];
     else {
         top_proc.priority = 100;
@@ -131,7 +131,7 @@ int periodic_scheduler(int time) {
 
     // Handle state of children
     if (running_child != top_proc.proc_num) {
-        if (running_child != NOTHING_RUNNING)
+        if (running_child != NO_PROCESS)
         	suspend_child(children[running_child]);
 
         if (children[top_proc.proc_num] == 0)
@@ -157,7 +157,7 @@ int main(__attribute__((unused)) int argc, char **argv) {
     strcpy(prog_name, argv[0]);
 
     jobs = parse_input(argv[1]);
-    running_child = NOTHING_RUNNING;
+    running_child = NO_PROCESS;
     start_timer();
     return 0;
 }

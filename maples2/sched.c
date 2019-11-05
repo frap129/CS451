@@ -23,19 +23,19 @@ process *jobs;
 
 void suspend_child(pid_t child) {
     // Send SIGTSTP to the child
-    if (child != 0)
+    if (child != NO_PID)
         kill(child, SIGTSTP);
 }
 
 void resume_child(pid_t child) {
     // Send SIGCONT to the child
-    if (child != 0)
+    if (child != NO_PID)
         kill(child, SIGCONT);
 }
 
 void kill_child(pid_t child) {
     // Send SIGTERM to the child
-    if (child != 0)
+    if (child != NO_PID)
 	    kill(child, SIGTERM);
 }
 
@@ -58,7 +58,7 @@ void create_child(int new_job){
     char *args[ARG_NUM_MAX] = {"./child", child_num, child_prio, NULL};
 
     // If we're in the child, run the child executable
-    if (children[new_job] == 0) {
+    if (children[new_job] == NO_PID) {
         execv("./child", args);
         printf("%s: error executing process %d", prog_name,
                 jobs[new_job].proc_num);
@@ -87,7 +87,7 @@ int periodic_scheduler(int time) {
         if (jobs[running_child].burst <= 0) {
             // Kill child if job is dune
             kill_child(children[running_child]);
-            children[running_child] = 0;
+            children[running_child] = NO_PID;
             running_child = NO_PROCESS;
         }
     }
@@ -140,7 +140,7 @@ int periodic_scheduler(int time) {
         if (running_child != NO_PROCESS)
         	suspend_child(children[running_child]);
 
-        if (children[top_proc] == 0)
+        if (children[top_proc] == NO_PID)
             create_child(top_proc);
         else {
         	resume_child(children[top_proc]);
@@ -160,7 +160,7 @@ int periodic_scheduler(int time) {
 
 int main(__attribute__((unused)) int argc, char **argv) {
     // Make the name of this executable globally accessible
-    prog_name = malloc((strlen(argv[0]) + 1) * sizeof(char));
+    prog_name = malloc((strlen(argv[0])) * sizeof(char));
     strcpy(prog_name, argv[0]);
 
     jobs = parse_input(argv[1]);

@@ -14,7 +14,6 @@
 #include <unistd.h>
 
 #define BASE_PRIME	1234000031
-#define MAX_RANGE   1000000
 #define LLU		long long unsigned
 
 LLU int highest_prime;
@@ -86,7 +85,7 @@ int main(__attribute__((unused)) int argc, char **argv) {
     // Check all numbers from BASE_PRIME to BASE_PRIME+2*MAX_RANGE
     int num_found = 0;
     LLU int num_to_check = BASE_PRIME; 
-    while (num_found < MAX_RANGE) {
+    while (1) {
         // If number is prime, increment num_found and save it
         if (check_prime(num_to_check)) {
             highest_prime = num_to_check;

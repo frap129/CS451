@@ -80,7 +80,7 @@ void check_complete() {
     }
 }
 
-void check_current_job_done() {
+int periodic_scheduler(int time) {
     // Start by seeing if current job is done
     if (running_child != NO_PROCESS) {
         jobs[running_child].burst--;
@@ -91,10 +91,6 @@ void check_current_job_done() {
             running_child = NO_PROCESS;
         }
     }
-}
-
-int periodic_scheduler(int time) {
-    check_current_job_done();
 
 	// Find new jobs to launch
 	int new_children[num_jobs];

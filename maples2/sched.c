@@ -64,9 +64,6 @@ void create_child(int new_job){
                 jobs[new_job].proc_num);
         exit(EXIT_FAILURE);
     }
-
-    // Let the parent wait on the child
-    waitpid(children[new_job], NULL, WNOHANG);
 }
 
 void check_complete() {

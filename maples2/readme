@@ -1,10 +1,10 @@
 To compile for debugging:
-    gcc sched.c timer.c parser.c -g -Wall -Wextra -o sched
-    gcc child.c -lm -g -Wall -Wextra -o child
+    gcc sched.c timer.c parser.c -g -Wall -Wextra -o sched;
+    gcc child.c -lm -g -Wall -Wextra -o child;
 
 To compile:
-    gcc sched.c timer.c parser.c -o sched
-    gcc child.c -lm -o child
+    gcc sched.c timer.c parser.c -o sched;
+    gcc child.c -lm -o child;
 
 Usage:
     ./sched <path to input file>
@@ -14,4 +14,5 @@ Notes:
     - Timer is impimented as described in lab
     - Prime number checking is implimented similarly to sample_prime.c
     - Since the exact line spacing of the input file wasn't specified, I assumed 50 chars max.
+    - Per the pdf, it is assumed that arg 1 is the path to an input file.
     - Valgrind was used to check for unreported errors and memory leaks

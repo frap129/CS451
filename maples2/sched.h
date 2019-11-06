@@ -1,7 +1,7 @@
 /*
  * Author: Joseph Maples
  * Assignment Number: 2
- * Date of Submission: TBD
+ * Date of Submission: November 6th, 2019
  * Name of this file: sched.h
  * Description of the program: Header for sched.c
  */
@@ -21,5 +21,5 @@ extern char *prog_name; // For error printing
 #define PID_LEN_MAX		(sizeof(char) * 5) /* Length of /proc/sys/kernel/
                                               pid_max */
 // Functions provided by sched.c
-int periodic_scheduler(int time);
+void periodic_scheduler(int time);
 #endif // SCHED_H

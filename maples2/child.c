@@ -1,9 +1,9 @@
 /*
  * Author: Joseph Maples
  * Assignment Number: 2
- * Date of Submission: TBD
+ * Date of Submission: November 6th, 2019
  * Name of this file: child.c
- * Description of the program: Prime checking algorithms for child processes.
+ * Description of the program: Prime checking algorithm for child processes.
  */
 
 #include <math.h>
@@ -21,6 +21,13 @@ int child_num;
 int priority;
 pid_t pid;
 
+/*
+    Function Name: sig_handler
+    Input to the method: Numeric value of the recieved signal.
+    Output(Return value): Nothing (void)
+    Brief description of the task: Handle each signal with the correct strings
+                                   and action (pause or exit).
+ */
 void sig_handler(int sigval) {
     // Handle SIGTSTP, SIGCONT, and SIGTERM
     switch(sigval) {
@@ -47,10 +54,18 @@ void sig_handler(int sigval) {
     } 
 }
 
-int check_prime(long long unsigned int check) {
+/*
+    Function Name: check_prime
+    Input to the method: An interger to check for primality.
+    Output(Return value): Prime or not prime (Int)
+    Brief description of the task: Check if a number is prime by dividing it
+                                   by every number from 3 to sqrt(input) and
+                                   checking the remainder.
+ */
+int check_prime(LLU int check) {
     // Determine our range of 2 to sqrt(n)
     LLU int range = sqrt(check); // truncated on purpose
-    LLU int i = 2; 
+    LLU int i = 3; 
 
     // Check the remainder of 2 to sqrt(n)
     int prime = 1;
@@ -63,6 +78,13 @@ int check_prime(long long unsigned int check) {
     return (prime);
 }
 
+/*
+    Function Name: main
+    Input to the method: Number of arguments passed and the list of arguments.
+    Output(Return value): Error or not error (Int)
+    Brief description of the task: Parse input, setup a signal handler, and
+                                   begin checking primes.
+ */
 int main(__attribute__((unused)) int argc, char **argv) {
     // Set global PID value
     child_num = atoi(argv[1]);

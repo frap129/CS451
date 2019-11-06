@@ -1,10 +1,10 @@
 /*
  * Author: Joseph Maples
  * Assignment Number: 2
- * Date of Submission: TBD
+ * Date of Submission: November 6th, 2019
  * Name of this file: parser.h
  * Description of the program: A group of functions that 
-                handle parsing information from input files
+                handle parsing information from input files.
  */
 #ifndef PARSER_H
 #define PARSER_H

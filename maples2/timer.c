@@ -1,7 +1,7 @@
 /*
  * Author: Joseph Maples
  * Assignment Number: 2
- * Date of Submission: TBD
+ * Date of Submission: November 6th, 2019
  * Name of this file: timer.c
  * Description of the program: Functions related to timing.
  */
@@ -17,17 +17,30 @@
 
 unsigned int latest_time;
 
+/*
+    Function Name: alarm_handler
+    Input to the method: Numeric value of the recieved signal.
+    Output(Return value): Nothing (void)
+    Brief description of the task: Increment the time, and run the periodic
+                                   scheduler.
+ */
 void alarm_handler(__attribute__((unused)) int sigval) {
     // Keep track of time
-	  latest_time++;
-    printf("Scheduler: Time Now: %u seconds\n", latest_time);
+    latest_time++;
 
     // Execute the scheduler
-	  periodic_scheduler(latest_time);
+    periodic_scheduler(latest_time);
 }
 
-int start_timer() {
-	  // Create and set sigaction
+/*
+    Function Name: start_timer
+    Input to the method: Nothing
+    Output(Return value): Nothing (void)
+    Brief description of the task: Create a signal handler, create a timer,
+                                   and start the timer.
+ */
+void start_timer() {
+    // Create and set sigaction
     struct sigaction sa;
     memset(&sa, 0, sizeof(sa));
     sa.sa_handler = alarm_handler;
@@ -46,6 +59,6 @@ int start_timer() {
     }
 
     while (1) {
-  	  //wait for timer
+        //wait for timer
     }
 }

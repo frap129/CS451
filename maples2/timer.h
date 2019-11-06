@@ -1,7 +1,7 @@
 /*
  * Author: Joseph Maples
  * Assignment Number: 2
- * Date of Submission: TBD
+ * Date of Submission: November 6th, 2019
  * Name of this file: timer.h
  * Description of the program: Functions related to timing.
  */
@@ -10,5 +10,5 @@
 #define TIMER_H
 
 // Functions provided by timer.c
-int start_timer();
+void start_timer();
 #endif // TIMER_H

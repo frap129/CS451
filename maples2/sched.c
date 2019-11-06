@@ -236,7 +236,7 @@ void periodic_scheduler(int time) {
  */
 int main(__attribute__((unused)) int argc, char **argv) {
     // Make the name of this executable globally accessible
-    prog_name = malloc((strlen(argv[0])) * sizeof(char));
+    prog_name = malloc((strlen(argv[0])) + 1 * sizeof(char));
     strcpy(prog_name, argv[0]);
 
     jobs = parse_input(argv[1]);

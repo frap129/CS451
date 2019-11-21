@@ -1,10 +1,13 @@
 ASSIGNMENT := 3
 NAME := elevator
-NAME2 := main
-NAME3 := person
-NAME4 := utils
-CFLAGS := -g -Wall -Wextra
-
+CFLAGS := -g -Wall -Wextra -Iinclude
+SRC := src/elevator.c \
+       src/main.c \
+       src/person.c \
+       src/utils.c \
+       src/queue/queue.c \
+       src/queue/node.c
+ 
 PHONY: clean build
 clean:
 	@rm -f $(NAME) $<
@@ -12,7 +15,7 @@ clean:
 	@echo "Build files removed!" $<
 build:
 	@echo "Compiling..." $<
-	@gcc $(NAME).c $(NAME2).c $(NAME3).c $(NAME4).c $(CFLAGS) -o $(NAME) $<
+	@gcc $(SRC) $(CFLAGS) -o $(NAME) $<
 
 	@echo "Zipping..." $<
 	@cd .. && zip -r maples$(ASSIGNMENT).zip maples$(ASSIGNMENT) \

@@ -17,7 +17,8 @@ typedef struct queue_data queue;
 // Functions provided by queue.c
 queue *init_queue();
 void free_queue(queue *this);
-int enqueue(queue *this, int floor, int time);
+int enqueue_ft(queue *this, int floor, int time);
+int enqueue_f(queue *this, int floor);
 node *dequeue(queue *this);
 int is_empty(queue *this);
 

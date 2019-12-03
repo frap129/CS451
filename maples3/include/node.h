@@ -4,8 +4,8 @@
 // Struct for queue data
 struct wander_data {
     struct wander_data *next;
-	int floor;
-	int time;
+	int floor; // Used for person/elevator
+	int time; // Used for person
 };
 
 

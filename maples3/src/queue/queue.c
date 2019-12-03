@@ -23,7 +23,7 @@ void free_queue(queue *this) {
     free(this);
 }
 
-int enqueue(queue *this, int floor, int time) {
+int enqueue_ft(queue *this, int floor, int time) {
     node *item = init_node();
     item->floor = floor;
     item->time = time;
@@ -38,6 +38,23 @@ int enqueue(queue *this, int floor, int time) {
 
 	return 0;
 }
+
+int enqueue_f(queue *this, int floor) {
+    node *item = init_node();
+    item->floor = floor;
+    item->time = 0;
+
+    if (this->head == NULL)
+        this->head = item;
+    else
+        this->tail->next = item;
+
+    this->tail = item;
+    this->size++;
+
+    return 0;
+}
+
 
 node *dequeue(queue *this) {
     node *item = NULL;

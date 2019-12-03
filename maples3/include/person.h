@@ -22,4 +22,7 @@ struct person_data {
 // Typedef struct so it can be used like an object
 typedef struct person_data person;
 
+// Functions provided by person.c
+void *run_person();
+
 #endif // PERSON_H

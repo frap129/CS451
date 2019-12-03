@@ -8,3 +8,7 @@
 
 #include <stdio.h>
 #include "person.h"
+
+void *run_person() {
+	
+}

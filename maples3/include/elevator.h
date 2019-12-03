@@ -9,6 +9,7 @@
 #define ELEVATOR_H
 
 #include <pthread.h>
+#include "queue.h"
 #include "utils.h"
 
 typedef int direction;
@@ -20,11 +21,14 @@ struct elevator_data {
     direction dir;
     int num_floors;
 	int current_floor;
-	int *wander_time[2];
+	queue *stops;
 };
 
 // Typedef struct so it can be used like an object
 typedef struct elevator_data elevator;
 
+// Functions provided by elevator.c
+void init_elevator(options opts);
+void *run_elevator();
 
 #endif // ELEVATOR_H

@@ -1,6 +1,6 @@
 ASSIGNMENT := 3
 NAME := elevator
-CFLAGS := -g -Wall -Wextra -Iinclude
+CFLAGS := -g -Wall -Wextra -Iinclude -lpthread
 SRC := src/elevator.c \
        src/main.c \
        src/person.c \

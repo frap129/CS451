@@ -10,6 +10,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "person.h"
+#include "main.h"
+#include "queue.h"
 #include "utils.h"
 
 /*
@@ -50,6 +52,33 @@ options set_options(const int argc, char **argv) {
     return opts;
 }
 
+int parse_input(FILE *input_ptr, options opts) {
+    // Check if pointer was acquired, error if not.
+    if (input_ptr == NULL) {
+        printf("%s: error opening input file.\n", prog_name);
+        exit(EXIT_FAILURE);
+    } 
+
+    char *line = malloc(100 * sizeof(char));
+
+    /*
+        Loop over the lines of input and parse each one.
+     */
+    int num_lines = 0;
+    while (fgets(line, 100, input_ptr)) {
+        fscanf(input_ptr, "%d", &people[num_lines].num_pairs);
+        people[num_lines].schedule = init_queue();
+        for (int i = 0; i < people[num_lines].num_pairs; i++) {
+            int floor, time;
+            fscanf(input_ptr, "%d %d", &floor, &time);
+            if (time > opts.max_wander_time) time = opts.max_wander_time;
+            enqueue(people[num_lines].schedule, floor, time);
+        }
+    }
+
+    return 0;   
+}
+
 
 /*
     Function Name: is_opts_empty
@@ -59,12 +88,8 @@ options set_options(const int argc, char **argv) {
  */
 int is_opts_empty(const options opts) {
     // Check all values stored in opts, return 1 if all 0
-    if (opts.num_floors == 0 && opts.num_people == 0 &&
-            opts.max_wander_time == 0)
-        return 1;
-
-    // Return 0 if options are not all 0
-    return 0;
+    return (opts.num_floors == 0 && opts.num_people == 0 &&
+            opts.max_wander_time == 0);
 }
 
 /*

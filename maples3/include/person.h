@@ -8,11 +8,15 @@
 #ifndef PERSON_H
 #define PERSON_H
 
+#include <pthread.h>
+#include "queue.h"
+
 // Struct of a person's data
 struct person_data {
-	//pthread_t thread;
+	pthread_t thread;
+    int person_id;
 	int num_pairs;
-	int *max_wander_time[2];
+	queue *schedule;
 };
 
 // Typedef struct so it can be used like an object

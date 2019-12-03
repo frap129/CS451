@@ -2,6 +2,7 @@
 #define QUEUE_H
 
 #include "node.h"
+#include "utils.h"
 
 // Struct for queue data
 struct queue_data {
@@ -16,7 +17,7 @@ typedef struct queue_data queue;
 // Functions provided by queue.c
 queue *init_queue();
 void free_queue(queue *this);
-int enqueue(queue *this, node *item);
+int enqueue(queue *this, int floor, int time);
 node *dequeue(queue *this);
 int is_empty(queue *this);
 

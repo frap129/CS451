@@ -1,7 +1,7 @@
 /*
  * Author: Joseph Maples
- * Assignment Number: 2
- * Date of Submission: OTBD
+ * Assignment Number: 3
+ * Date of Submission: TBD
  * Name of this file: utils.h
  * Description of the program: Misc utility functions
  */
@@ -21,6 +21,7 @@ typedef struct program_options options;
 
 // Functions publically provided by utils.c
 options set_options(const int argc, char **argv);
+int parse_input(FILE *input_ptr, options opts);
 int is_opts_empty(const options opts);
 void print_help(char *this_prog);
 

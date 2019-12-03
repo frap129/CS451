@@ -2,12 +2,17 @@
 #define NODE_H
 
 // Struct for queue data
-struct node_data {
-    struct node_data *next;
-    int data;
+struct wander_data {
+    struct wander_data *next;
+	int floor;
+	int time;
 };
 
+
 // Typedef struct so it can be used like an object
-typedef struct node_data node;
+typedef struct wander_data node;
+
+// Functions provided by node.h
+node *init_node();
 
 #endif // QUEUE_H

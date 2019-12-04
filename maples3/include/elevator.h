@@ -16,12 +16,12 @@ typedef int direction;
 #define DOWN 0
 
 struct elevator_data {
-	pthread_t thread;
+    pthread_t thread;
     direction dir;
     int num_floors;
-	int current_floor;
-	int max_wander_time;
-	int *stops;
+    int current_floor;
+    int max_wander_time;
+    int *stops;
 };
 
 // Typedef struct so it can be used like an object

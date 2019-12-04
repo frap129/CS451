@@ -13,10 +13,10 @@
 
 // Struct of a person's data
 struct person_data {
-	pthread_t thread;
+    pthread_t thread;
     int id;
-	int num_pairs;
-	queue *schedule;
+    int num_pairs;
+    queue *schedule;
 };
 
 // Typedef struct so it can be used like an object

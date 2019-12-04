@@ -78,7 +78,7 @@ int parse_input(FILE *input_ptr, options opts) {
             offset += buf_len;
             if (times[j] > opts.max_wander_time)
                 times[j] = opts.max_wander_time;
-            enqueue(people[i].schedule, floors[j]-1, times[j]);
+            enqueue(people[i].schedule, floors[j], times[j]);
         }
 
         printf("Person %d: Floors to visit: ", i);

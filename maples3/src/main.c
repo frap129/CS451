@@ -14,28 +14,22 @@
 #include "main.h"
 #include "utils.h"
 
-#define DEBUG 1
-
 char *prog_name;
 person *people;
 elevator lift;
 
 int main (int argc, char **argv) {
+	prog_name = malloc((strlen(argv[0])) + 1 * sizeof(char));
 	strcpy(prog_name, argv[0]);
 	options opts = set_options(argc, argv);
 	init_elevator(opts);
-	people = malloc(sizeof(pthread_t) * opts.num_people);
-#if DEBUG == 1
-	FILE *input = fopen("input.txt", "r");
-#else
-	FILE *input = STDIN_FILENO;
-#endif
+	people = malloc(sizeof(person) * opts.num_people);
+	FILE *input = stdin;
     parse_input(input, opts);
 	for (int i = 0; i < opts.num_people; i++) {
-		people[i].person_id = i;
+		people[i].id = i;
 		pthread_create(&people[i].thread, NULL, run_person, &people[i]);		
 	}
-
 
 
     pthread_create(&lift.thread, NULL, run_elevator, NULL);

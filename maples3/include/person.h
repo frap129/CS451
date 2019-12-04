@@ -14,7 +14,7 @@
 // Struct of a person's data
 struct person_data {
 	pthread_t thread;
-    int person_id;
+    int id;
 	int num_pairs;
 	queue *schedule;
 };
@@ -23,6 +23,6 @@ struct person_data {
 typedef struct person_data person;
 
 // Functions provided by person.c
-void *run_person();
+void *run_person(void *arg);
 
 #endif // PERSON_H

@@ -59,22 +59,42 @@ int parse_input(FILE *input_ptr, options opts) {
         exit(EXIT_FAILURE);
     } 
 
-    char *line = malloc(100 * sizeof(char));
-
     /*
         Loop over the lines of input and parse each one.
      */
-    int num_lines = 0;
-    while (fgets(line, 100, input_ptr)) {
-        fscanf(input_ptr, "%d", &people[num_lines].num_pairs);
-        people[num_lines].schedule = init_queue();
-        for (int i = 0; i < people[num_lines].num_pairs; i++) {
-            int floor, time;
-            fscanf(input_ptr, "%d %d", &floor, &time);
-            if (time > opts.max_wander_time) time = opts.max_wander_time;
-            enqueue(people[num_lines].schedule, floor, time);
+    for (int i = 0; i < opts.num_people; i++) {
+        char *line = malloc(100 * sizeof(char));
+        fgets(line, 100, input_ptr);
+        int buf_len,offset = 0;
+
+        sscanf(line+offset, "%d%n", &people[i].num_pairs, &buf_len);
+        offset += buf_len;
+        people[i].schedule = init_queue();
+        int *floors = malloc(sizeof(int)*people[i].num_pairs);
+        int *times = malloc(sizeof(int)*people[i].num_pairs);
+
+        for (int j = 0; j < people[i].num_pairs; j++) {
+            sscanf(line+offset, " %d %d%n", &floors[j], &times[j], &buf_len);
+            offset += buf_len;
+            if (times[j] > opts.max_wander_time)
+                times[j] = opts.max_wander_time;
+            enqueue(people[i].schedule, floors[j]-1, times[j]);
         }
+
+        printf("Person %d: Floors to visit: ", i);
+        for (int j = 0; j < people[i].num_pairs; j++)
+            printf("%d, ", floors[j]);
+
+        printf("\nPerson %d: Time on each floor: ", i);
+        for (int j = 0; j < people[i].num_pairs; j++)
+            printf("%d, ", times[j]);
+        printf("\n");
+
+        free(line);
+        free(floors);
+        free(times);
     }
+    printf("\n");
 
     return 0;   
 }

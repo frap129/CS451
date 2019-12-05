@@ -1,6 +1,9 @@
 ASSIGNMENT := 3
 NAME := elevator
-CFLAGS := -g -Wall -Wextra -Iinclude -lpthread $(CFLAGS)
+CFLAGS := -g -Wall -Wextra -Iinclude -lpthread
+ifneq ($(strip $(EXTRA_CREDIT)),)
+    CFLAGS += -DEXTRA_CREDIT
+endif
 SRC := src/elevator.c \
        src/main.c \
        src/person.c \

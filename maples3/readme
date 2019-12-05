@@ -1,1 +1,11 @@
-tmp
+To compile:
+    make;
+To compile extra credit version:
+    make EXTRA_CREDIT=1;
+
+Usage:
+    ./elevator [options] < <path to input file>
+Options:
+    -f<number of floors>
+    -p<number of people>
+    -w<max wander time>

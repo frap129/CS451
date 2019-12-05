@@ -52,7 +52,7 @@ void *run_person(void *arg) {
         sleep(next_stop->time);
 #ifdef EXTRA_CREDIT
         }
-#endif
+#endif // EXTRA_CREDIT
     }
     printf("Person %d: Leaving the building\n", me->id);    
 

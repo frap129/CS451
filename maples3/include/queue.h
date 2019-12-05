@@ -2,7 +2,6 @@
 #define QUEUE_H
 
 #include "node.h"
-#include "utils.h"
 
 // Struct for queue data
 struct queue_data {

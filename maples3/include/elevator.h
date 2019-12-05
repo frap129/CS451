@@ -9,7 +9,6 @@
 #define ELEVATOR_H
 
 #include <pthread.h>
-#include "utils.h"
 
 typedef int direction;
 #define UP 1
@@ -18,9 +17,7 @@ typedef int direction;
 struct elevator_data {
     pthread_t thread;
     direction dir;
-    int num_floors;
     int current_floor;
-    int max_wander_time;
     int *stops;
 };
 
@@ -28,10 +25,10 @@ struct elevator_data {
 typedef struct elevator_data elevator;
 
 // Functions provided by elevator.c
-void init_elevator(options opts);
+void init_elevator(options *opts);
 void add_stop(int floor);
 int get_floor();
-void move_floor();
-void *run_elevator();
+void move_floor(int num_floors);
+void *run_elevator(void *arg);
 
 #endif // ELEVATOR_H

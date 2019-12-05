@@ -8,9 +8,10 @@
 
 #include <stdio.h>
 #include <unistd.h>
+#include "person.h"
+#include "utils.h"
 #include "elevator.h"
 #include "node.h"
-#include "person.h"
 
 void *run_person(void *arg) {
     int floor = 0;

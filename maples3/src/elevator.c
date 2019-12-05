@@ -11,21 +11,24 @@
 #include <stdlib.h>
 #include <time.h>
 #include <unistd.h>
+#include "person.h"
+#include "utils.h"
 #include "elevator.h"
 
 elevator lift;
 sem_t add_stop_mutex;
 sem_t get_floor_mutex;
+sem_t direction_mutex;
 
-void init_elevator(options opts) {
+void init_elevator(options *opts) {
     elevator new;
     new.dir = UP;
-    new.num_floors = opts.num_floors;
-    new.max_wander_time = opts.max_wander_time;
-    new.stops = (int *) malloc(sizeof(int)*new.num_floors);
+    new.current_floor = 0;
+    new.stops = (int *) malloc(sizeof(int)*opts->num_floors);
 
     sem_init(&add_stop_mutex, 0, 1);
     sem_init(&get_floor_mutex, 0, 1);
+    sem_init(&direction_mutex, 0, 1);
 
     lift = new;
 }
@@ -44,35 +47,44 @@ int get_floor() {
     return ret;
 }
 
-void print_waiting() {
+void print_waiting(int num_floors) {
     printf("\t\t\t\t\t\tElevator: People waiting at each floor:\n");
     printf("\t\t\t\t\t\tFloor\tPeople\n");
     sem_wait(&add_stop_mutex);
-    for (int i = lift.num_floors; i > 0; i--)
+    for (int i = num_floors; i > 0; i--)
         printf("\t\t\t\t\t\t%d\t%d\n", i, lift.stops[i-1]);
     sem_post(&add_stop_mutex);
 }
 
-void move_floor() {
+void move_floor(int num_floors) {
     sleep(1);
     sem_wait(&get_floor_mutex);
+    sem_wait(&direction_mutex);
+
     if (lift.dir == UP)
         lift.current_floor++;
     else
         lift.current_floor--;
+    sem_post(&direction_mutex);
     sem_post(&get_floor_mutex);
 
-    if (get_floor() == lift.num_floors) {
-        printf("\t\t\t\t\t\tElevator: At floor %d, heading to 0\n", lift.num_floors);
+    if (get_floor() == num_floors) {
+        printf("\t\t\t\t\t\tElevator: At floor %d, heading to 0\n", num_floors);
+        sem_wait(&direction_mutex);
         lift.dir = DOWN;
+        sem_post(&direction_mutex);
     } else if (get_floor() == 0) {
-        printf("\t\t\t\t\t\tElevator: At floor 0, heading to %d\n", lift.num_floors);
-        print_waiting();
+        printf("\t\t\t\t\t\tElevator: At floor 0, heading to %d\n", num_floors);
+        print_waiting(num_floors);
+        sem_wait(&direction_mutex);
         lift.dir = UP;
+        sem_post(&direction_mutex);
+
     }
 }
 
-void *run_elevator() {
+void *run_elevator(void *arg) {
+    options *opts = (options *) arg;
     int done = 0;
     time_t last_stop = time(0);
     while(!done) {
@@ -84,11 +96,11 @@ void *run_elevator() {
             last_stop = time(0);
         }
         sem_post(&add_stop_mutex);
-        if ((time(0)-last_stop) > lift.max_wander_time) {
+        if ((time(0)-last_stop) > opts->max_wander_time) {
             printf("\t\t\t\t\t\tElevator: Exiting the system\n");    
             done = 1;
         } else
-            move_floor();
+            move_floor(opts->num_floors);
     }
 
     return NULL;

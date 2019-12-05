@@ -52,19 +52,23 @@ options set_options(const int argc, char **argv) {
     return opts;
 }
 
-int parse_input(FILE *input_ptr, options opts) {
-    // Check if pointer was acquired, error if not.
-    if (input_ptr == NULL) {
-        printf("%s: error opening input file.\n", prog_name);
-        exit(EXIT_FAILURE);
-    } 
+/*
+    Function Name: parse_input
+    Input to the method: Pointer to options struct
+    Output(Return value): An instance of options containing int/bools of the
+                          valid arguments passed
+    Brief description of the task: Parse contents of stdin after the options
+ */
 
+person *parse_input(options *opts) {
+
+    person *people = malloc(sizeof(person)*opts->num_people);
     /*
         Loop over the lines of input and parse each one.
      */
-    for (int i = 0; i < opts.num_people; i++) {
+    for (int i = 0; i < opts->num_people; i++) {
         char *line = malloc(100 * sizeof(char));
-        fgets(line, 100, input_ptr);
+        fgets(line, 100, stdin);
         int buf_len,offset = 0;
 
         sscanf(line+offset, "%d%n", &people[i].num_pairs, &buf_len);
@@ -76,8 +80,8 @@ int parse_input(FILE *input_ptr, options opts) {
         for (int j = 0; j < people[i].num_pairs; j++) {
             sscanf(line+offset, " %d %d%n", &floors[j], &times[j], &buf_len);
             offset += buf_len;
-            if (times[j] > opts.max_wander_time)
-                times[j] = opts.max_wander_time;
+            if (times[j] > opts->max_wander_time)
+                times[j] = opts->max_wander_time;
             enqueue(people[i].schedule, floors[j], times[j]);
         }
 
@@ -95,8 +99,7 @@ int parse_input(FILE *input_ptr, options opts) {
         free(times);
     }
     printf("\n");
-
-    return 0;   
+    return people;
 }
 
 

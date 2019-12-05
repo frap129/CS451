@@ -7,11 +7,7 @@
  */
 #ifndef MAIN_H
 #define MAIN_H
-#include "elevator.h"
-#include "person.h"
 
 extern char *prog_name;
-extern person *people;
-extern elevator lift;
 
 #endif // MAIN_H

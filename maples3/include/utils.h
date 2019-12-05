@@ -21,7 +21,7 @@ typedef struct program_options options;
 
 // Functions publically provided by utils.c
 options set_options(const int argc, char **argv);
-int parse_input(FILE *input_ptr, options opts);
+person *parse_input(options *opts);
 int is_opts_empty(const options opts);
 void print_help(char *this_prog);
 

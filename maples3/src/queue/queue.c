@@ -10,6 +10,12 @@
 #include "node.h"
 #include "queue.h"
 
+/*
+    Function Name: init_queue
+    Input to the method: None
+    Output(Return value): pointer to a queue
+    Brief description of the task: Creates an empty queue
+ */
 queue *init_queue() {
     queue *new = (queue*) malloc(sizeof (queue));
     new->head = NULL;
@@ -18,6 +24,12 @@ queue *init_queue() {
     return new;
 }
 
+/*
+    Function Name: free_queue
+    Input to the method: Pointer to a queue
+    Output(Return value): None (void)
+    Brief description of the task: Frees pointers in a queue
+ */
 void free_queue(queue *this) {
     node *item;
 
@@ -29,7 +41,13 @@ void free_queue(queue *this) {
     free(this);
 }
 
-int enqueue(queue *this, int floor, int time) {
+/*
+    Function Name: enqueue
+    Input to the method: Queue pointer, floor(int), time(int) 
+    Output(Return value): None (void)
+    Brief description of the task: Create a node and add to queue's tail
+ */
+void enqueue(queue *this, int floor, int time) {
     node *item = init_node();
     item->floor = floor;
     item->time = time;
@@ -41,10 +59,14 @@ int enqueue(queue *this, int floor, int time) {
 
     this->tail = item;
     this->size++;
-
-    return 0;
 }
 
+/*
+    Function Name: dequeue
+    Input to the method: Queue pointer
+    Output(Return value): Node pointer that was at HEAD
+    Brief description of the task: Remove a node from head and return it
+ */
 node *dequeue(queue *this) {
     node *item = NULL;
 
@@ -57,6 +79,12 @@ node *dequeue(queue *this) {
     return item;
 }
 
+/*
+    Function Name: is_empty
+    Input to the method: Queue pointer 
+    Output(Return value): 1 if queue empty, 0 otherwise
+    Brief description of the task: Create a node and add to queue
+ */
 int is_empty(queue *this) {
     return (this->size == 0);
 }

@@ -9,6 +9,12 @@
 #include <stdio.h>
 #include "node.h"
 
+/*
+    Function Name: init_node
+    Input to the method: None
+    Output(Return value): Pointer to a node
+    Brief description of the task: Initialize a node struct
+ */
 node *init_node() {
 	node *new = (node *) malloc(sizeof (node));
     new->next = NULL;

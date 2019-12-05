@@ -19,6 +19,7 @@ struct elevator_data {
     direction dir;
     int current_floor;
     int *stops;
+    int *waiting;
 };
 
 // Typedef struct so it can be used like an object
@@ -27,6 +28,7 @@ typedef struct elevator_data elevator;
 // Functions provided by elevator.c
 void init_elevator(options *opts);
 void add_stop(int floor);
+void call_elevator(int floor);
 int get_floor();
 void *run_elevator(void *arg);
 #ifdef EXTRA_CREDIT

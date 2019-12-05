@@ -9,3 +9,14 @@ Options:
     -f<number of floors>
     -p<number of people>
     -w<max wander time>
+
+Notes:
+- All functionality described in the PDF is implimented
+- Valgrind reports 2 suppressed errors from libpthread, unable to fix
+- Because my elevator moves floors before printing whose waiting, a
+  person waiting on floor 0 may be reported as waiting after they've
+  boarded the elevator, but are still on floor 0.
+- The extra credit version is implimented separately from the main
+  version using macro #ifdef's and can be built by passing the flag
+  -DEXTRA_CREDIT to gcc, or setting the environment variable
+  EXTRA_CREDIT to anything.

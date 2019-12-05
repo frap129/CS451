@@ -59,7 +59,6 @@ options set_options(const int argc, char **argv) {
                           valid arguments passed
     Brief description of the task: Parse contents of stdin after the options
  */
-
 person *parse_input(options *opts) {
 
     person *people = malloc(sizeof(person)*opts->num_people);

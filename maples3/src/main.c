@@ -16,7 +16,13 @@
 
 char *prog_name;
 
-int main (int argc, char **argv) {
+/*
+    Function Name: main
+    Input to the method: number of args (int), list of args (char**)
+    Output(Return value): Exit code (int)
+    Brief description of the task: Initialize and start threads
+ */
+int main(int argc, char **argv) {
     prog_name = malloc((strlen(argv[0])) + 1 * sizeof(char));
     strcpy(prog_name, argv[0]);
 
@@ -32,6 +38,8 @@ int main (int argc, char **argv) {
     }
 
     pthread_join(lift.thread, NULL);
+    free(people);
+    free(prog_name);
 
     return 0;
 }

@@ -19,7 +19,6 @@ build:
 
 	@echo "Zipping..." $<
 	@cd .. && zip -r maples$(ASSIGNMENT).zip maples$(ASSIGNMENT) \
-		-x maples$(ASSIGNMENT)/Makefile \
 		-x maples$(ASSIGNMENT)/.* \
 		-x maples$(ASSIGNMENT)/$(NAME) $<
 	@mv ../maples$(ASSIGNMENT).zip . $<

@@ -47,12 +47,22 @@ int get_floor() {
     return ret;
 }
 
+#ifdef EXTRA_CREDIT
+direction get_direction() {
+    sem_wait(&direction_mutex);
+    direction ret = lift.dir;
+    sem_post(&direction_mutex);
+
+    return ret;
+}
+#endif // EXTRA_CREDIT
+
 void print_waiting(int num_floors) {
     printf("\t\t\t\t\t\tElevator: People waiting at each floor:\n");
     printf("\t\t\t\t\t\tFloor\tPeople\n");
     sem_wait(&add_stop_mutex);
-    for (int i = num_floors; i > 0; i--)
-        printf("\t\t\t\t\t\t%d\t%d\n", i, lift.stops[i-1]);
+    for (int i = 0; i <= num_floors; i++)
+        printf("\t\t\t\t\t\t%d\t%d\n", i, lift.stops[i]);
     sem_post(&add_stop_mutex);
 }
 
@@ -89,7 +99,7 @@ void *run_elevator(void *arg) {
     time_t last_stop = time(0);
     while(!done) {
         sem_wait(&add_stop_mutex);
-        if (lift.stops[get_floor()]){
+        if (lift.stops[get_floor()] > 0){
             printf("\t\t\t\t\t\tElevator: Stopping at floor %d\n", get_floor());
             sleep(1);
             lift.stops[get_floor()] = 0;
@@ -100,7 +110,7 @@ void *run_elevator(void *arg) {
             printf("\t\t\t\t\t\tElevator: Exiting the system\n");    
             done = 1;
         } else
-            move_floor(opts->num_floors);
+            move_floor(opts->num_floors-1);
     }
 
     return NULL;

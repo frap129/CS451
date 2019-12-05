@@ -28,7 +28,9 @@ typedef struct elevator_data elevator;
 void init_elevator(options *opts);
 void add_stop(int floor);
 int get_floor();
-void move_floor(int num_floors);
 void *run_elevator(void *arg);
+#ifdef EXTRA_CREDIT
+direction get_direction();
+#endif // EXTRA_CREDIT
 
 #endif // ELEVATOR_H

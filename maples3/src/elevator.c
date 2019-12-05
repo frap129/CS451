@@ -24,6 +24,8 @@ void init_elevator(options *opts) {
     new.dir = UP;
     new.current_floor = 0;
     new.stops = (int *) malloc(sizeof(int)*opts->num_floors);
+    for (int i = 0; i < opts->num_floors; i++)
+        new.stops[i] = 0;
 
     sem_init(&add_stop_mutex, 0, 1);
     sem_init(&get_floor_mutex, 0, 1);

@@ -1,3 +1,10 @@
+/*
+ * Author: Joseph Maples
+ * Assignment Number: 3
+ * Date of Submission: December 5th, 2019
+ * Name of this file: queue.h
+ * Description of the program: Header for queue.c
+ */
 #ifndef QUEUE_H
 #define QUEUE_H
 

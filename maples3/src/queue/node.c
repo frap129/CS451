@@ -1,3 +1,10 @@
+/*
+ * Author: Joseph Maples
+ * Assignment Number: 3
+ * Date of Submission: December 5th, 2019
+ * Name of this file: node.c
+ * Description of the program: A node for the queue implimentation
+ */
 #include <stdlib.h>
 #include <stdio.h>
 #include "node.h"

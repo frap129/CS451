@@ -1,3 +1,10 @@
+/*
+ * Author: Joseph Maples
+ * Assignment Number: 3
+ * Date of Submission: December 5th, 2019
+ * Name of this file: node.h
+ * Description of the program: Header for node.c
+ */
 #ifndef NODE_H
 #define NODE_H
 

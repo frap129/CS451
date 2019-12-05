@@ -1,12 +1,10 @@
 /*
  * Author: Joseph Maples
  * Assignment Number: 3
- * Date of Submission: TBD
+ * Date of Submission: December 5th, 2019
  * Name of this file: main.c
- * Description of the program: An elevator system that syncronizes elevator
-                               and person movement.
+ * Description of the program: Initializes and starts threads
  */
-
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>

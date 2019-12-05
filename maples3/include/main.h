@@ -1,7 +1,7 @@
 /*
  * Author: Joseph Maples
  * Assignment Number: 3
- * Date of Submission: TBD
+ * Date of Submission: December 5th, 2019
  * Name of this file: main.h
  * Description of the program: header for main.c
  */

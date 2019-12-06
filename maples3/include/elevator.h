@@ -20,6 +20,7 @@ struct elevator_data {
     int current_floor;
     int *stops;
     int *waiting;
+    int doors_open;
 };
 
 // Typedef struct so it can be used like an object
@@ -30,6 +31,7 @@ void init_elevator(options *opts);
 void add_stop(int floor);
 void call_elevator(int floor);
 int get_floor();
+int get_doors();
 void *run_elevator(void *arg);
 #ifdef EXTRA_CREDIT
 direction get_direction();

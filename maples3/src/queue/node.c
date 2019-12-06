@@ -16,6 +16,7 @@
     Brief description of the task: Initialize a node struct
  */
 node *init_node() {
+	// Initialize a node struct
 	node *new = (node *) malloc(sizeof (node));
     new->next = NULL;
     new->floor = 0;

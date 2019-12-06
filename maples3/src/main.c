@@ -9,12 +9,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "main.h"
 #include "person.h"
 #include "utils.h"
 #include "elevator.h"
-
-char *prog_name;
 
 /*
     Function Name: main
@@ -23,23 +20,34 @@ char *prog_name;
     Brief description of the task: Initialize and start threads
  */
 int main(int argc, char **argv) {
-    prog_name = malloc((strlen(argv[0])) + 1 * sizeof(char));
-    strcpy(prog_name, argv[0]);
-
+    // Parse input options
     options *opts = malloc(sizeof(options)); 
     opts[0] = set_options(argc, argv);
-    elevator lift;
+
+    // Exit if no options passed
+    if (is_opts_empty(opts)) {
+        printf("error: no options pased\n");
+        exit(EXIT_FAILURE);
+    }
+
+    // Initialize the elevator thread
+    pthread_t ethread;
     init_elevator(opts);
-    pthread_create(&lift.thread, NULL, run_elevator, opts);
+    pthread_create(&ethread, NULL, run_elevator, opts);
+
+    // Initialize the people threads
     person *people = parse_input(opts);
     for (int i = 0; i < opts->num_people; i++) {
         people[i].id = i;
         pthread_create(&people[i].thread, NULL, run_person, &people[i]);    
     }
 
-    pthread_join(lift.thread, NULL);
+    // Nothing else to do, join elevator
+    pthread_join(ethread, NULL);
+
+    // Cleanup when the thread exits
     free(people);
-    free(prog_name);
+    free(opts);
 
     return 0;
 }

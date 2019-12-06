@@ -17,6 +17,7 @@
     Brief description of the task: Creates an empty queue
  */
 queue *init_queue() {
+    // Initialize a queue struct
     queue *new = (queue*) malloc(sizeof (queue));
     new->head = NULL;
     new->tail = NULL;
@@ -33,11 +34,13 @@ queue *init_queue() {
 void free_queue(queue *this) {
     node *item;
 
+    // Dequeue and free all remaining nodes
     while (!is_empty(this)) {
         item = dequeue(this);
         free(item);
     }
 
+    // Free the queue pointer
     free(this);
 }
 
@@ -48,15 +51,18 @@ void free_queue(queue *this) {
     Brief description of the task: Create a node and add to queue's tail
  */
 void enqueue(queue *this, int floor, int time) {
+    // Create a node with the given values
     node *item = init_node();
     item->floor = floor;
     item->time = time;
 
+    // If the queue is empty, set to head. If not, append to tail
     if (this->head == NULL)
         this->head = item;
     else
         this->tail->next = item;
 
+    // Update tail and size
     this->tail = item;
     this->size++;
 }
@@ -70,12 +76,14 @@ void enqueue(queue *this, int floor, int time) {
 node *dequeue(queue *this) {
     node *item = NULL;
 
+    // If the queue is not empty, remove an item from head
     if (this->head != NULL) {
         item = this->head;
         this->head = item->next;
         this->size--;
     }
 
+    // Return the dequeued node
     return item;
 }
 

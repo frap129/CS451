@@ -10,7 +10,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "person.h"
-#include "main.h"
 #include "queue.h"
 #include "utils.h"
 
@@ -42,8 +41,6 @@ options set_options(const int argc, char **argv) {
                 break;
             case '?':
             default:
-                // Print help for unknown options
-                print_help(argv[0]);
                 exit(EXIT_FAILURE);
         }
     }
@@ -60,22 +57,26 @@ options set_options(const int argc, char **argv) {
     Brief description of the task: Parse contents of stdin after the options
  */
 person *parse_input(options *opts) {
-
+    // Initialize a pointer array of people
     person *people = malloc(sizeof(person)*opts->num_people);
-    /*
-        Loop over the lines of input and parse each one.
-     */
-    for (int i = 0; i < opts->num_people; i++) {
-        char *line = malloc(100 * sizeof(char));
-        fgets(line, 100, stdin);
-        int buf_len,offset = 0;
 
-        sscanf(line+offset, "%d%n", &people[i].num_pairs, &buf_len);
+    // Loop over the lines of input and parse each one.
+    for (int i = 0; i < opts->num_people; i++) {
+        // Grab a whole line of input
+        char *line = malloc(MAX_LINE_LEN * sizeof(char));
+        fgets(line, MAX_LINE_LEN, stdin);
+
+        // Grab the number of pairs and track the offset
+        int buf_len,offset = 0;
+        sscanf(line, "%d%n", &people[i].num_pairs, &buf_len);
         offset += buf_len;
+
+        // Initialize our input storage queue and arrays for printing
         people[i].schedule = init_queue();
         int *floors = malloc(sizeof(int)*people[i].num_pairs);
         int *times = malloc(sizeof(int)*people[i].num_pairs);
 
+        // Read in all of pairs on this line
         for (int j = 0; j < people[i].num_pairs; j++) {
             sscanf(line+offset, " %d %d%n", &floors[j], &times[j], &buf_len);
             offset += buf_len;
@@ -84,19 +85,24 @@ person *parse_input(options *opts) {
             enqueue(people[i].schedule, floors[j], times[j]);
         }
 
+        // Print the floors to visit
         printf("Person %d: Floors to visit: ", i);
         for (int j = 0; j < people[i].num_pairs; j++)
             printf("%d, ", floors[j]);
 
+        // Print wander times for each floor
         printf("\nPerson %d: Time on each floor: ", i);
         for (int j = 0; j < people[i].num_pairs; j++)
             printf("%d, ", times[j]);
         printf("\n");
 
+        //cleanup
         free(line);
         free(floors);
         free(times);
     }
+
+    // Space out from the rest of the output
     printf("\n");
     return people;
 }
@@ -108,24 +114,8 @@ person *parse_input(options *opts) {
     Output(Return value): Empty or not (Int: 1 true, 0 false)
     Brief description of the task: Check if all ints in options are zero
  */
-int is_opts_empty(const options opts) {
+int is_opts_empty(const options *opts) {
     // Check all values stored in opts, return 1 if all 0
-    return (opts.num_floors == 0 && opts.num_people == 0 &&
-            opts.max_wander_time == 0);
-}
-
-/*
-    Function Name: print_help
-    Input to the method: The name of this executable (argv[0])
-    Output(Return value): Nothing (Void)
-    Brief description of the task: Print program usage and help dialog
- */
-void print_help(char *this_prog) {
-    // Print correct usage of program and its options
-    printf("\n");
-    printf("Usage: %s [options] < /path/to/input/file\n\n", this_prog);
-    printf("Options:\n");
-    printf("-p <num>\tSet number of people using the elevator.\n");
-    printf("-f <num>\tSet number of floors in the building.\n");
-    printf("-w <num>\tSet the max time any person can wander.\n");
+    return (opts->num_floors == 0 && opts->num_people == 0 &&
+            opts->max_wander_time == 0);
 }

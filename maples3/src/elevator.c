@@ -1,7 +1,7 @@
 /*
  * Author: Joseph Maples
  * Assignment Number: 3
- * Date of Submission: December 5th, 2019
+ * Date of Submission: December 6th, 2019
  * Name of this file: elevator.c
  * Description of the program: Functions for running the elevator thread
  */

@@ -13,11 +13,11 @@ Person 4: Time on each floor: 1, 5, 5, 1, 1, 1, 1, 1, 1, 3,
 Person 0: Waiting for elevator on floor 0
 Person 0: Pressed the button for floor 2
 Person 1: Waiting for elevator on floor 0
-Person 3: Waiting for elevator on floor 0
-Person 3: Pressed the button for floor 8
 Person 2: Waiting for elevator on floor 0
 Person 1: Pressed the button for floor 4
 Person 2: Pressed the button for floor 6
+Person 3: Waiting for elevator on floor 0
+Person 3: Pressed the button for floor 8
 Person 4: Waiting for elevator on floor 0
 Person 4: Pressed the button for floor 10
 						Elevator: Stopping at floor 2
@@ -47,16 +47,16 @@ Person 4: Waiting for elevator on floor 10
 Person 4: Pressed the button for floor 11
 						Elevator: At floor 11, heading to 0
 						Elevator: Stopping at floor 11
-Person 3: Getting off at floor 11
-Person 2: Getting off at floor 11
 Person 4: Getting off at floor 11
 Person 0: Getting off at floor 11
-Person 0: Wandering for 1 seconds
-Person 2: Wandering for 3 seconds
-Person 4: Wandering for 5 seconds
 Person 1: Getting off at floor 11
-Person 1: Wandering for 2 seconds
+Person 4: Wandering for 5 seconds
+Person 3: Getting off at floor 11
+Person 2: Getting off at floor 11
 Person 3: Wandering for 4 seconds
+Person 2: Wandering for 3 seconds
+Person 0: Wandering for 1 seconds
+Person 1: Wandering for 2 seconds
 Person 0: Waiting for elevator on floor 11
 Person 0: Pressed the button for floor 1
 Person 1: Waiting for elevator on floor 11
@@ -70,10 +70,10 @@ Person 4: Waiting for elevator on floor 11
 						Elevator: Stopping at floor 4
 						Elevator: Stopping at floor 2
 						Elevator: Stopping at floor 1
-Person 0: Getting off at floor 1
-Person 0: Wandering for 5 seconds
 Person 1: Getting off at floor 1
 Person 1: Wandering for 5 seconds
+Person 0: Getting off at floor 1
+Person 0: Wandering for 5 seconds
 						Elevator: At floor 0, heading to 11
 						Elevator: People waiting at each floor:
 						Floor	People
@@ -100,61 +100,63 @@ Person 0: Wandering for 1 seconds
 Person 0: Waiting for elevator on floor 2
 Person 0: Pressed the button for floor 3
 						Elevator: Stopping at floor 3
-Person 1: Getting off at floor 3
-Person 1: Wandering for 1 seconds
 Person 0: Getting off at floor 3
 Person 0: Wandering for 1 seconds
-Person 1: Waiting for elevator on floor 3
-Person 1: Pressed the button for floor 4
+Person 1: Getting off at floor 3
+Person 1: Wandering for 1 seconds
 Person 0: Waiting for elevator on floor 3
 Person 0: Pressed the button for floor 4
+Person 1: Waiting for elevator on floor 3
+Person 1: Pressed the button for floor 4
 						Elevator: Stopping at floor 4
-Person 0: Getting off at floor 4
-Person 0: Wandering for 1 seconds
 Person 1: Getting off at floor 4
 Person 1: Wandering for 1 seconds
+Person 0: Getting off at floor 4
+Person 0: Wandering for 1 seconds
 Person 0: Waiting for elevator on floor 4
-Person 0: Pressed the button for floor 5
 Person 1: Waiting for elevator on floor 4
 Person 1: Pressed the button for floor 5
+Person 0: Pressed the button for floor 5
 						Elevator: Stopping at floor 5
+Person 0: Getting off at floor 5
 Person 1: Getting off at floor 5
 Person 1: Wandering for 1 seconds
-Person 0: Getting off at floor 5
 Person 0: Wandering for 1 seconds
-Person 1: Waiting for elevator on floor 5
 Person 0: Waiting for elevator on floor 5
 Person 0: Pressed the button for floor 6
+Person 1: Waiting for elevator on floor 5
 Person 1: Pressed the button for floor 6
 						Elevator: Stopping at floor 6
-Person 1: Getting off at floor 6
-Person 1: Wandering for 1 seconds
 Person 0: Getting off at floor 6
 Person 0: Wandering for 1 seconds
-Person 1: Waiting for elevator on floor 6
+Person 1: Getting off at floor 6
+Person 1: Wandering for 1 seconds
 Person 0: Waiting for elevator on floor 6
+Person 1: Waiting for elevator on floor 6
 Person 0: Pressed the button for floor 7
 Person 1: Pressed the button for floor 7
 						Elevator: Stopping at floor 7
+Person 1: Getting off at floor 7
 Person 0: Getting off at floor 7
 Person 0: Wandering for 1 seconds
-Person 1: Getting off at floor 7
 Person 1: Wandering for 1 seconds
-Person 0: Waiting for elevator on floor 7
+Person 0: Elevator going wrong direction, waiting a cycle
 Person 1: Waiting for elevator on floor 7
-Person 0: Pressed the button for floor 0
 Person 1: Pressed the button for floor 8
 						Elevator: Stopping at floor 8
 Person 1: Getting off at floor 8
 Person 1: Wandering for 1 seconds
+Person 1: Elevator going wrong direction, waiting a cycle
+						Elevator: At floor 11, heading to 0
+Person 3: Pressed the button for floor 1
+Person 4: Pressed the button for floor 1
+Person 2: Pressed the button for floor 1
+						Elevator: Stopping at floor 11
+Person 0: Waiting for elevator on floor 7
 Person 1: Waiting for elevator on floor 8
 Person 1: Pressed the button for floor 0
-Person 2: Pressed the button for floor 1
-Person 4: Pressed the button for floor 1
-Person 3: Pressed the button for floor 1
-						Elevator: At floor 11, heading to 0
-						Elevator: Stopping at floor 11
 						Elevator: Stopping at floor 8
+Person 0: Pressed the button for floor 0
 						Elevator: Stopping at floor 7
 						Elevator: Stopping at floor 6
 						Elevator: Stopping at floor 5
@@ -163,8 +165,8 @@ Person 3: Pressed the button for floor 1
 						Elevator: Stopping at floor 2
 						Elevator: Stopping at floor 1
 Person 2: Getting off at floor 1
-Person 4: Getting off at floor 1
 Person 2: Wandering for 5 seconds
+Person 4: Getting off at floor 1
 Person 4: Wandering for 5 seconds
 Person 3: Getting off at floor 1
 Person 3: Wandering for 5 seconds
@@ -184,18 +186,18 @@ Person 3: Wandering for 5 seconds
 						10	0
 						11	0
 						Elevator: Stopping at floor 0
-Person 0: Getting off at floor 0
-Person 0: Wandering for 2 seconds
 Person 1: Getting off at floor 0
 Person 1: Wandering for 2 seconds
+Person 0: Getting off at floor 0
+Person 0: Wandering for 2 seconds
 Person 1: Leaving the building
 Person 0: Leaving the building
 Person 2: Waiting for elevator on floor 1
 Person 2: Pressed the button for floor 4
-Person 3: Waiting for elevator on floor 1
 Person 4: Waiting for elevator on floor 1
-Person 3: Pressed the button for floor 5
 Person 4: Pressed the button for floor 6
+Person 3: Waiting for elevator on floor 1
+Person 3: Pressed the button for floor 5
 						Elevator: Stopping at floor 4
 Person 2: Getting off at floor 4
 Person 2: Wandering for 1 seconds
@@ -207,77 +209,79 @@ Person 3: Wandering for 1 seconds
 Person 2: Getting off at floor 5
 Person 2: Wandering for 1 seconds
 Person 3: Waiting for elevator on floor 5
+Person 3: Pressed the button for floor 6
 Person 2: Waiting for elevator on floor 5
 Person 2: Pressed the button for floor 6
-Person 3: Pressed the button for floor 6
 						Elevator: Stopping at floor 6
-Person 2: Getting off at floor 6
+Person 4: Getting off at floor 6
 Person 3: Getting off at floor 6
 Person 3: Wandering for 1 seconds
+Person 2: Getting off at floor 6
 Person 2: Wandering for 1 seconds
-Person 4: Getting off at floor 6
 Person 4: Wandering for 1 seconds
-Person 2: Waiting for elevator on floor 6
 Person 4: Waiting for elevator on floor 6
-Person 2: Pressed the button for floor 7
 Person 4: Pressed the button for floor 7
 Person 3: Waiting for elevator on floor 6
+Person 2: Waiting for elevator on floor 6
 Person 3: Pressed the button for floor 7
+Person 2: Pressed the button for floor 7
 						Elevator: Stopping at floor 7
-Person 2: Getting off at floor 7
-Person 3: Getting off at floor 7
-Person 3: Wandering for 1 seconds
-Person 2: Wandering for 1 seconds
 Person 4: Getting off at floor 7
+Person 3: Getting off at floor 7
 Person 4: Wandering for 1 seconds
-Person 2: Waiting for elevator on floor 7
-Person 2: Pressed the button for floor 8
-Person 3: Waiting for elevator on floor 7
-Person 3: Pressed the button for floor 8
+Person 3: Wandering for 1 seconds
+Person 2: Getting off at floor 7
+Person 2: Wandering for 1 seconds
 Person 4: Waiting for elevator on floor 7
 Person 4: Pressed the button for floor 8
+Person 2: Waiting for elevator on floor 7
+Person 3: Waiting for elevator on floor 7
+Person 2: Pressed the button for floor 8
+Person 3: Pressed the button for floor 8
 						Elevator: Stopping at floor 8
-Person 4: Getting off at floor 8
-Person 4: Wandering for 1 seconds
-Person 3: Getting off at floor 8
-Person 3: Wandering for 1 seconds
 Person 2: Getting off at floor 8
 Person 2: Wandering for 1 seconds
-Person 2: Waiting for elevator on floor 8
-Person 4: Waiting for elevator on floor 8
-Person 3: Waiting for elevator on floor 8
-Person 4: Pressed the button for floor 9
-Person 3: Pressed the button for floor 9
-Person 2: Pressed the button for floor 9
-						Elevator: Stopping at floor 9
-Person 3: Getting off at floor 9
-Person 2: Getting off at floor 9
+Person 4: Getting off at floor 8
+Person 3: Getting off at floor 8
 Person 3: Wandering for 1 seconds
-Person 2: Wandering for 1 seconds
-Person 4: Getting off at floor 9
 Person 4: Wandering for 1 seconds
+Person 2: Waiting for elevator on floor 8
+Person 2: Pressed the button for floor 9
+Person 3: Waiting for elevator on floor 8
+Person 4: Waiting for elevator on floor 8
+Person 3: Pressed the button for floor 9
+Person 4: Pressed the button for floor 9
+						Elevator: Stopping at floor 9
+Person 4: Getting off at floor 9
+Person 3: Getting off at floor 9
+Person 3: Wandering for 1 seconds
+Person 4: Wandering for 1 seconds
+Person 2: Getting off at floor 9
+Person 2: Wandering for 1 seconds
 Person 3: Waiting for elevator on floor 9
+Person 2: Elevator going wrong direction, waiting a cycle
 Person 3: Pressed the button for floor 10
-Person 2: Waiting for elevator on floor 9
-Person 2: Pressed the button for floor 0
 Person 4: Waiting for elevator on floor 9
 Person 4: Pressed the button for floor 10
 						Elevator: Stopping at floor 10
-Person 3: Getting off at floor 10
-Person 3: Wandering for 1 seconds
 Person 4: Getting off at floor 10
 Person 4: Wandering for 1 seconds
-Person 3: Waiting for elevator on floor 10
-Person 3: Pressed the button for floor 0
+Person 3: Getting off at floor 10
+Person 3: Wandering for 1 seconds
+Person 3: Elevator going wrong direction, waiting a cycle
 Person 4: Waiting for elevator on floor 10
 Person 4: Pressed the button for floor 11
 						Elevator: At floor 11, heading to 0
+Person 2: Waiting for elevator on floor 9
+Person 3: Waiting for elevator on floor 10
 						Elevator: Stopping at floor 11
 Person 4: Getting off at floor 11
 Person 4: Wandering for 1 seconds
 Person 4: Waiting for elevator on floor 11
 Person 4: Pressed the button for floor 0
+Person 3: Pressed the button for floor 0
 						Elevator: Stopping at floor 10
+Person 2: Pressed the button for floor 0
 						Elevator: Stopping at floor 9
 						Elevator: Stopping at floor 8
 						Elevator: Stopping at floor 7
@@ -299,16 +303,16 @@ Person 4: Pressed the button for floor 0
 						8	0
 						9	0
 						10	0
-						11	1
+						11	0
 						Elevator: Stopping at floor 0
 Person 2: Getting off at floor 0
 Person 2: Wandering for 2 seconds
+Person 4: Getting off at floor 0
 Person 3: Getting off at floor 0
 Person 3: Wandering for 2 seconds
-Person 4: Getting off at floor 0
 Person 4: Wandering for 3 seconds
-Person 3: Leaving the building
 Person 2: Leaving the building
+Person 3: Leaving the building
 Person 4: Leaving the building
 						Elevator: At floor 11, heading to 0
 						Elevator: Stopping at floor 11

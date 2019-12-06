@@ -11,6 +11,7 @@ Options:
     -w<max wander time>
 
 Notes:
+- I would like to use both of my remaining coupons on this assignment
 - All functionality described in the PDF is implimented
 - Valgrind reports 2 suppressed errors from libpthread, unable to fix
 - Because my elevator moves floors before printing whose waiting, a

@@ -47,9 +47,9 @@ void handle_cmd(list *mem, char *input, int len) {
         free_list(mem);
         exit(EXIT_SUCCESS);
     } else {
-        if (len > 4) {
+        if (len >= 4) {
             char *test = (char*) malloc(sizeof(char)*5);
-            sprintf(test, "%.*s", 4, input);
+            sprintf(input, "%.*s", 4, test);
             if (strcmp(test, "STAT")) {
                 stat(mem);
             }

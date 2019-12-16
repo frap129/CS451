@@ -95,10 +95,10 @@ void release(list *this, int proc) {
 
     // Reallocate the space
     if (check->prev->proc == FREE) {
-        check->prev->length += check->length + 1;
+        check->prev->length += check->length;
         rm_block(this, check);
     } else if (check->next->proc == FREE) {
-        check->length += check->next->length + 1;
+        check->length += check->next->length;
         rm_block(this, check->next);
     } else {
         check->proc = FREE;
@@ -110,5 +110,14 @@ void compact(list *this) {
 }
 
 void stat(list *this) {
-
+    block *read = this->head;
+    do {
+        if (read->proc != FREE)
+            printf("Address [%llu:%llu] Process P%d\n",
+                read->start, read->length, read->proc);
+        else
+            printf("Address [%llu:%llu] Unused\n",
+                read->start, read->length);
+        read = read->next;
+    } while (read != NULL);
 }

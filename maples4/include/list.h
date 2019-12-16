@@ -15,9 +15,9 @@
 #define FREE	-1 // for int proc in block
 
 // Fit type
-#define FIRST_FIT	0
-#define BEST_FIT	1
-#define WORST_FIT	2
+#define FIRST	0
+#define BEST	1
+#define WORST	2
 
 // Struct for block data
 struct block_data {
@@ -42,7 +42,9 @@ typedef struct list_data list;
 // Functions provided by list.c
 list *init_list(int size);
 void free_list(list *this);
-BOOL insert(list *this, int size, int proc);
+BOOL insert(list *this, int size, int proc, int fit);
 void release(list *this, int proc);
+void compact(list *this);
+void stat(list *this);
 
 #endif // QUEUE_H

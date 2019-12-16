@@ -5,46 +5,87 @@
  * Name of this file: main.c
  * Description of the program:
  */
-#include <getopt.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "list.h"
-#include "main.h"
 
-/*
-    Function Name: parse_fit
-    Input to the method: Number of cmdline arguments passed and the list of
-                         arguments
-    Output(Return value): An instance of options containing int/bools of the
-                          valid arguments passed
-    Brief description of the task: Parse argv for valid arguments and set them
-                                   in options, error on unknown options.
- */
-int parse_fit(const int argc, char **argv) {
-    int getopt_ret; // Create int to store getopts return val
-    int fit = BEST_FIT;
-
-    // Loop over every passed option with getopt
-    while ((getopt_ret = getopt(argc, argv, "fbw")) != -1) {
-        // Chceck which opton was passed and handle accordingly
-        switch (getopt_ret) {
-            case 'f':
-                fit = FIRST_FIT;
-                break;
-            case 'b':
-                fit = BEST_FIT;
-                break;
-            case 'w':
-                fit = WORST_FIT;
-                break;
-            case '?':
-            default:
-                exit(EXIT_FAILURE);
+void handle_cmd(list *mem, char *input, int len) {
+    if (input[0] == 'R') {
+        if (input[1] == 'Q') {
+            if (input[3] == 'P') {
+                int proc, size, fit = 0;
+                char fit_tmp;
+                sscanf(input, "%*s %*c%d %d %c", &proc, &size, &fit_tmp);
+                switch(fit_tmp) {
+                    case 'F':
+                        fit = FIRST;
+                        break;
+                    case 'B':
+                        fit = BEST;
+                        break;
+                    case 'W':
+                        fit = WORST;
+                        break;
+                    default:
+                        break;
+                }
+                insert(mem, size, proc, fit);
+            }
+        } else if (input[1] == 'L') {
+            if (input[3] == 'P') {
+                int proc = 0;
+                sscanf(input, "%*s %*c%d", &proc);
+                release(mem, atoi(proc));
+            }
+        }
+    } else if (input[0] == 'C') {
+        compact(mem);
+    } else if (input[0] == 'X') {
+        free(input);
+        free_list(mem);
+        exit(EXIT_SUCCESS);
+    } else {
+        if (len > 4) {
+            char *test = (char*) malloc(sizeof(char)*5);
+            sprintf(test, "%.*s", 4, input);
+            if (strcmp(test, "STAT")) {
+                stat(mem);
+            }
         }
     }
+}
 
-    // Return struct of selected options.
-    return fit;
+void interact(int size, char *prog_name) {
+    int character = 0;
+    list *mem = init_list(size);
+
+    // Run until Ctrl+D (EOF) is sent
+    while (character != EOF) {
+        char *input = malloc(1);
+        int length = 0;
+        printf("%s> ", prog_name);
+        // Read each line of input char by char
+        while((character = fgetc(stdin)) != '\n' && character != EOF) {
+            input[length++] = character;
+            input = realloc(input, length + 1); // Increase memory as needed
+        }
+
+        clearerr(stdin); // Clear error after reaching EOF
+
+        // If EOF is reached on a blank line, exit early
+        if (length == 0 && character == EOF)
+            return;
+
+        // Preform requested action
+        handle_cmd(mem, input, length);
+
+        // clean up
+        free(input);
+    }
+
+    free_list(mem);
+    return;
 }
 
 /*
@@ -54,8 +95,13 @@ int parse_fit(const int argc, char **argv) {
     Brief description of the task:
  */
 int main(int argc, char **argv) {
-    arguments args;
-    args.fit = parse_fit(argc, argv);
-    printf("%d", args.fit);
+    if (argc < 2) {
+        printf("%s: size missing from arguments\n", argv[0]);
+        exit(EXIT_FAILURE);
+    }
+
+    int size = atoi(argv[1]);
+    interact(size, argv[0]);
+    
     return 0;
 }

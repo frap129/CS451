@@ -55,11 +55,11 @@ void free_list(list *this) {
 
 /*
     Function Name: insert
-    Input to the method: list pointer, size(int), proc(int) 
+    Input to the method: list pointer, size(int), proc(int), fit(int)
     Output(Return value): Boolean (true: space, false: no space)
     Brief description of the task: Create a block and add to first free block
  */
-BOOL insert(list *this, int size, int proc){
+BOOL insert(list *this, int size, int proc, int fit) {
     // TODO
 }
 
@@ -101,6 +101,14 @@ void release(list *this, int proc) {
         check->length += check->next->length + 1;
         rm_block(this, check->next);
     } else {
-        check->proc == FREE;
+        check->proc = FREE;
     }
+}
+
+void compact(list *this) {
+
+}
+
+void stat(list *this) {
+
 }

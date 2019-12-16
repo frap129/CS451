@@ -15,7 +15,7 @@
     Output(Return value): pointer to a list
     Brief description of the task: Creates an empty list
  */
-list *init_list(int size) {
+list *init_list(LLU size) {
     // Initialize a block of free memory
     block *empty = (block*) malloc(sizeof (block));
     empty->proc = FREE;
@@ -59,7 +59,7 @@ void free_list(list *this) {
     Output(Return value): Boolean (true: space, false: no space)
     Brief description of the task: Create a block and add to first free block
  */
-BOOL insert(list *this, int size, int proc, int fit) {
+BOOL insert(list *this, LLU size, int proc, int fit) {
     // TODO
 }
 

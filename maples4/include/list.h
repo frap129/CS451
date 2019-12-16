@@ -9,6 +9,7 @@
 #define LIST_H
 
 // Macro Constants
+#define LLU		long long unsigned int
 #define BOOL	int // For booleans
 #define TRUE	1 // For booleans
 #define FALSE	0 // For booleans
@@ -22,8 +23,8 @@
 // Struct for block data
 struct block_data {
 	int proc;
-	int start;
-	int length;
+	LLU start;
+	LLU length;
     struct block_data *next;
     struct block_data *prev;
 };
@@ -40,9 +41,9 @@ struct list_data {
 typedef struct list_data list;
 
 // Functions provided by list.c
-list *init_list(int size);
+list *init_list(LLU size);
 void free_list(list *this);
-BOOL insert(list *this, int size, int proc, int fit);
+BOOL insert(list *this, LLU size, int proc, int fit);
 void release(list *this, int proc);
 void compact(list *this);
 void stat(list *this);

@@ -14,9 +14,10 @@ void handle_cmd(list *mem, char *input, int len) {
     if (input[0] == 'R') {
         if (input[1] == 'Q') {
             if (input[3] == 'P') {
-                int proc, size, fit = 0;
+                int proc, fit = 0;
+                LLU size = 0;
                 char fit_tmp;
-                sscanf(input, "%*s %*c%d %d %c", &proc, &size, &fit_tmp);
+                sscanf(input, "%*s %*c%d %llu %c", &proc, &size, &fit_tmp);
                 switch(fit_tmp) {
                     case 'F':
                         fit = FIRST;
@@ -36,7 +37,7 @@ void handle_cmd(list *mem, char *input, int len) {
             if (input[3] == 'P') {
                 int proc = 0;
                 sscanf(input, "%*s %*c%d", &proc);
-                release(mem, atoi(proc));
+                release(mem, proc);
             }
         }
     } else if (input[0] == 'C') {
@@ -56,7 +57,7 @@ void handle_cmd(list *mem, char *input, int len) {
     }
 }
 
-void interact(int size, char *prog_name) {
+void interact(LLU size, char *prog_name) {
     int character = 0;
     list *mem = init_list(size);
 
@@ -100,7 +101,7 @@ int main(int argc, char **argv) {
         exit(EXIT_FAILURE);
     }
 
-    int size = atoi(argv[1]);
+    LLU size = atoll(argv[1]);
     interact(size, argv[0]);
     
     return 0;

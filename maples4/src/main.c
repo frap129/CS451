@@ -16,7 +16,7 @@ void handle_cmd(list *mem, char *input, int len) {
             if (input[3] == 'P') {
                 int proc, fit = 0;
                 LLU size = 0;
-                char fit_tmp;
+                char fit_tmp = 'B';
                 sscanf(input, "%*s %*c%d %llu %c", &proc, &size, &fit_tmp);
                 switch(fit_tmp) {
                     case 'F':
@@ -31,7 +31,8 @@ void handle_cmd(list *mem, char *input, int len) {
                     default:
                         break;
                 }
-                insert(mem, size, proc, fit);
+                if (!insert(mem, size, proc, fit))
+                    printf("error: Not enough space available, try compacting first.\n");
             }
         } else if (input[1] == 'L') {
             if (input[3] == 'P') {
@@ -46,7 +47,7 @@ void handle_cmd(list *mem, char *input, int len) {
         free(input);
         free_list(mem);
         exit(EXIT_SUCCESS);
-    } else {
+    } else if (input[0] == 'S') {
         if (len >= 4) {
             char *test = (char*) malloc(sizeof(char)*5);
             sprintf(input, "%.*s", 4, test);

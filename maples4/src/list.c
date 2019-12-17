@@ -20,7 +20,7 @@ list *init_list(LLU size) {
     block *empty = (block*) malloc(sizeof (block));
     empty->proc = FREE;
     empty->start = 0;
-    empty->length = size - 1;
+    empty->length = size;
     empty->prev = NULL;
     empty->next = NULL;
 
@@ -53,6 +53,34 @@ void free_list(list *this) {
     free(this);
 }
 
+block *find_fit(list *this, LLU size, int fit) {
+    block *cur = this->head;
+    block *best = NULL;
+
+    // Loop over every block in the list
+    for (int i = 0; i < this->size; i++) {
+        // Check if there is enough free space in the current block
+        if (cur->proc == FREE && cur->length >= size) {
+            // Break out early if using first fit
+            if (fit == FIRST) {
+                best = cur;
+                break;
+            }
+
+            // Check if the block is better, worse, or the first fit.
+            if (best == NULL || (cur->length < best->length && fit == BEST) ||
+                (cur->length > best->length && fit == WORST))
+                best = cur;
+        }
+
+        // Move to the next block
+        cur = cur->next;
+    }
+
+    // Return the best bock
+    return best;
+}
+
 /*
     Function Name: insert
     Input to the method: list pointer, size(int), proc(int), fit(int)
@@ -60,7 +88,35 @@ void free_list(list *this) {
     Brief description of the task: Create a block and add to first free block
  */
 BOOL insert(list *this, LLU size, int proc, int fit) {
-    // TODO
+    // Create a new block to insert
+    block *new = (block*) malloc(sizeof(block));
+    new->length = size;
+    new->proc = proc;
+
+    // Find the best block based on size and fit
+    block *best = find_fit(this, size, fit);
+
+    // If no fit could be found, return error
+    if (best == NULL)
+        return FALSE;
+
+    /*
+        Insert the new block and shrink the free space by the size of the new block.
+    */
+    new->start = best->start;
+    new->prev = best->prev;
+    new->next = best;
+    best->start += size;
+    best->length -= size;
+    if (best->prev != NULL)
+        best->prev->next = new;
+    best->prev = new;
+    if (best == this->head)
+        this->head = new;
+
+    // Increment size and return
+    this->size++;
+    return TRUE;
 }
 
 void rm_block(list *this, block *rm) {
@@ -70,7 +126,7 @@ void rm_block(list *this, block *rm) {
     if (rm->prev != NULL)
         rm->prev->next = rm->next;
 
-    // Make sure the block isn't head or tail
+    // Update head or tail if needed
     if (this->head == rm)
         this->head = rm->next;
     if (this->tail == rm)
@@ -93,7 +149,9 @@ void release(list *this, int proc) {
     while (check->proc != proc)
         check = check->next;
 
-    // Reallocate the space
+    /*
+        Check if any neighboring blocks are free so we can just increase their size rather than creating 2 adjacent free blocks. If no neigbors are free, just set the current block to free.
+    */
     if (check->prev->proc == FREE) {
         check->prev->length += check->length;
         rm_block(this, check);
@@ -110,14 +168,22 @@ void compact(list *this) {
 }
 
 void stat(list *this) {
+    // Initialize block to store current read in
     block *read = this->head;
+
+    // Loop over each block
     do {
+        // Calculate last bit
+        LLU end = read->length + read->start - 1;
+
+        // Print the correct statement
         if (read->proc != FREE)
             printf("Address [%llu:%llu] Process P%d\n",
-                read->start, read->length, read->proc);
-        else
-            printf("Address [%llu:%llu] Unused\n",
-                read->start, read->length);
+                read->start, end, read->proc);
+        else if (read->length > 0)
+            printf("Address [%llu:%llu] Unused\n", read->start, end);
+
+        // Move to next block
         read = read->next;
     } while (read != NULL);
 }

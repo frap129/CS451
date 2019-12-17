@@ -164,7 +164,31 @@ void release(list *this, int proc) {
 }
 
 void compact(list *this) {
+    block *cur = this->head;
+    LLU free = 0;
 
+    do {
+        block *next = cur->next;
+        if (cur->proc == FREE) {
+            free += cur->length;
+            rm_block(this, cur);
+        } else
+            cur->start -= free;
+
+
+        // Move to the next block
+        cur = next;
+    } while (cur != NULL);
+
+    cur = this->tail;
+    block *new = (block*) malloc(sizeof(block));
+    new->proc = FREE;
+    new->start = cur->start + cur->length;
+    new->length = free;
+    new->prev = cur;
+    new->next = NULL;
+    cur->next = new;
+    this->tail = new;
 }
 
 void stat(list *this) {

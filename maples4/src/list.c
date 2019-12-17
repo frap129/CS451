@@ -146,16 +146,20 @@ void release(list *this, int proc) {
         check = check->next;
 
     /*
-        Check if any neighboring blocks are free so we can just increase their size rather than creating 2 adjacent free blocks. If no neigbors are free, just set the current block to free.
+        Check if any neighboring blocks are free so we can just increase their size rather than creating 2 adjacent free blocks. If no neigbors are free, just set the current block to free. This action is in a loop incase newly-moved neighbors are also free.
     */
-    if (check->prev != NULL && check->prev->proc == FREE) {
-        check->prev->length += check->length;
-        rm_block(this, check);
-    } else if (check->next != NULL && check->next->proc == FREE) {
-        check->length += check->next->length;
+
+    while (1) {
+        if (check->prev != NULL && check->prev->proc == FREE) {
+            check->prev->length += check->length;
+            check = check->prev;
+        } else if (check->next != NULL && check->next->proc == FREE) {
+            check->length += check->next->length;
+        } else {
+            check->proc = FREE;
+            break;
+        }
         rm_block(this, check->next);
-    } else {
-        check->proc = FREE;
     }
 }
 

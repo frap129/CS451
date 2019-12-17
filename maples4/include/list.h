@@ -35,7 +35,6 @@ typedef struct block_data block;
 struct list_data {
     block *head;
     block *tail;
-    int size;
 };
 // Typedef struct so it can be used like an object
 typedef struct list_data list;

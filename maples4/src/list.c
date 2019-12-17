@@ -28,7 +28,6 @@ list *init_list(LLU size) {
     list *new = (list*) malloc(sizeof (list));
     new->head = empty;
     new->tail = empty;
-    new->size = 1;
     return new;
 }
 
@@ -58,7 +57,7 @@ block *find_fit(list *this, LLU size, int fit) {
     block *best = NULL;
 
     // Loop over every block in the list
-    for (int i = 0; i < this->size; i++) {
+    do {
         // Check if there is enough free space in the current block
         if (cur->proc == FREE && cur->length >= size) {
             // Break out early if using first fit
@@ -75,7 +74,7 @@ block *find_fit(list *this, LLU size, int fit) {
 
         // Move to the next block
         cur = cur->next;
-    }
+    } while (cur != NULL);
 
     // Return the best bock
     return best;
@@ -114,8 +113,6 @@ BOOL insert(list *this, LLU size, int proc, int fit) {
     if (best == this->head)
         this->head = new;
 
-    // Increment size and return
-    this->size++;
     return TRUE;
 }
 
@@ -133,7 +130,6 @@ void rm_block(list *this, block *rm) {
         this->tail = rm->prev;
 
     // clean up
-    this->size--;
     free(rm);
 }
 
@@ -146,16 +142,16 @@ void rm_block(list *this, block *rm) {
 void release(list *this, int proc) {
     // Find the block to release
     block *check = this->head;
-    while (check->proc != proc)
+    while (check != NULL && check->proc != proc)
         check = check->next;
 
     /*
         Check if any neighboring blocks are free so we can just increase their size rather than creating 2 adjacent free blocks. If no neigbors are free, just set the current block to free.
     */
-    if (check->prev->proc == FREE) {
+    if (check->prev != NULL && check->prev->proc == FREE) {
         check->prev->length += check->length;
         rm_block(this, check);
-    } else if (check->next->proc == FREE) {
+    } else if (check->next != NULL && check->next->proc == FREE) {
         check->length += check->next->length;
         rm_block(this, check->next);
     } else {

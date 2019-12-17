@@ -167,6 +167,9 @@ void compact(list *this) {
     block *cur = this->head;
     LLU free = 0;
 
+    /*
+        Remove all free blocks and keep a running total of their length. Subtract this length from the start of all proceeding blocks.
+    */
     do {
         block *next = cur->next;
         if (cur->proc == FREE) {
@@ -180,6 +183,9 @@ void compact(list *this) {
         cur = next;
     } while (cur != NULL);
 
+    /*
+        Append a new block of free memory with the total length of all of the free blocks that were removed previously.
+    */
     cur = this->tail;
     block *new = (block*) malloc(sizeof(block));
     new->proc = FREE;

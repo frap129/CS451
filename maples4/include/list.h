@@ -1,7 +1,7 @@
 /*
  * Author: Joseph Maples
  * Assignment Number: 3
- * Date of Submission: December 6th, 2019
+ * Date of Submission: December 18th, 2019
  * Name of this file: list.h
  * Description of the program: Header for list.c
  */
@@ -47,4 +47,4 @@ void release(list *this, int proc);
 void compact(list *this);
 void stat(list *this);
 
-#endif // QUEUE_H
+#endif // LIST_H

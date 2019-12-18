@@ -1,9 +1,9 @@
 /*
  * Author: Joseph Maples
  * Assignment Number: 4
- * Date of Submission: TBD
+ * Date of Submission: December 18th, 2019
  * Name of this file: list.c
- * Description of the program:
+ * Description of the program: A LinkedList-based analogy for memory allocation
  */
 #include <stdlib.h>
 #include <stdio.h>
@@ -35,7 +35,7 @@ list *init_list(LLU size) {
     Function Name: free_list
     Input to the method: Pointer to a list
     Output(Return value): None (void)
-    Brief description of the task: Frees pointers in a list
+    Brief description of the task: Frees all pointers in a list
  */
 void free_list(list *this) {
     /*
@@ -52,6 +52,14 @@ void free_list(list *this) {
     free(this);
 }
 
+/*
+    Function Name: find_fit
+    Input to the method: list (list *), input size (long long unsigned int),
+                         and fit (int)
+    Output(Return value): pointer to a block
+    Brief description of the task: Finds the best place to insert the new
+                                   block based on size and fit.
+ */
 block *find_fit(list *this, LLU size, int fit) {
     block *cur = this->head;
     block *best = NULL;
@@ -84,7 +92,7 @@ block *find_fit(list *this, LLU size, int fit) {
     Function Name: insert
     Input to the method: list pointer, size(int), proc(int), fit(int)
     Output(Return value): Boolean (true: space, false: no space)
-    Brief description of the task: Create a block and add to first free block
+    Brief description of the task: Create a block and insert based on fit.
  */
 BOOL insert(list *this, LLU size, int proc, int fit) {
     // Create a new block to insert
@@ -116,6 +124,12 @@ BOOL insert(list *this, LLU size, int proc, int fit) {
     return TRUE;
 }
 
+/*
+    Function Name: rm_block
+    Input to the method: Pointer to a list, pointer to a block
+    Output(Return value): None (void)
+    Brief description of the task: Completely remove a block from the list.
+ */
 void rm_block(list *this, block *rm) {
     // Remove from block links
     if (rm->next != NULL)
@@ -137,7 +151,7 @@ void rm_block(list *this, block *rm) {
     Function Name: release
     Input to the method: list pointer, process number
     Output(Return value): None (void)
-    Brief description of the task: Find a node and remove it
+    Brief description of the task: Find a node and "free" its memory.
  */
 void release(list *this, int proc) {
     // Find the block to release
@@ -163,6 +177,12 @@ void release(list *this, int proc) {
     }
 }
 
+/*
+    Function Name: compact
+    Input to the method: Pointer to a list
+    Output(Return value): None (void)
+    Brief description of the task: compacts unused memory into a single block.
+ */
 void compact(list *this) {
     block *cur = this->head;
     LLU free = 0;
@@ -201,6 +221,12 @@ void compact(list *this) {
     this->tail = new;
 }
 
+/*
+    Function Name: stat
+    Input to the method: Pointer to a list
+    Output(Return value): None (void)
+    Brief description of the task: Print info on all blocks in the list.
+ */
 void stat(list *this) {
     // Initialize block to store current read in
     block *read = this->head;

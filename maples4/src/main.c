@@ -9,53 +9,51 @@
 #include <stdlib.h>
 #include <string.h>
 #include "list.h"
-
+void handle_rq_cmd(list *mem, char *input) {
+    int proc, fit = 0;
+    LLU size = 0;
+    char fit_tmp = 'B';
+    sscanf(input, "%*s %*c%d %llu %c", &proc, &size, &fit_tmp);
+    switch(fit_tmp) {
+        case 'F':
+            fit = FIRST;
+            break;
+        case 'B':
+            fit = BEST;
+            break;
+        case 'W':
+            fit = WORST;
+            break;
+        default:
+            printf("error: Invalid fit function\n");
+            return;
+            break;
+    }
+    if (!insert(mem, size, proc, fit))
+        printf("error: Not enough space available, try compacting first\n");
+}
 void handle_cmd(list *mem, char *input, int len) {
-    if (input[0] == 'R') {
-        if (input[1] == 'Q') {
-            if (input[3] == 'P') {
-                int proc, fit = 0;
-                LLU size = 0;
-                char fit_tmp = 'B';
-                sscanf(input, "%*s %*c%d %llu %c", &proc, &size, &fit_tmp);
-                switch(fit_tmp) {
-                    case 'F':
-                        fit = FIRST;
-                        break;
-                    case 'B':
-                        fit = BEST;
-                        break;
-                    case 'W':
-                        fit = WORST;
-                        break;
-                    default:
-                        break;
-                }
-                if (!insert(mem, size, proc, fit))
-                    printf("error: Not enough space available, try compacting first.\n");
-            }
-        } else if (input[1] == 'L') {
-            if (input[3] == 'P') {
-                int proc = 0;
-                sscanf(input, "%*s %*c%d", &proc);
-                release(mem, proc);
-            }
-        }
+    if (input[0] == 'R' && input[1] == 'Q' && input[3] == 'P') {
+        handle_rq_cmd(mem, input);
+    } else if (input[0] == 'R' && input[1] == 'L' && input[3] == 'P') {
+        int proc = 0;
+        sscanf(input, "%*s %*c%d", &proc);
+        release(mem, proc);
     } else if (input[0] == 'C') {
         compact(mem);
     } else if (input[0] == 'X') {
         free(input);
         free_list(mem);
         exit(EXIT_SUCCESS);
-    } else if (input[0] == 'S') {
-        if (len >= 4) {
-            char *test = (char*) malloc(sizeof(char)*5);
-            sprintf(input, "%.*s", 4, test);
-            if (strcmp(test, "STAT")) {
-                stat(mem);
-            }
-        }
-    }
+    } else if (input[0] == 'S' && len >= 4) {
+        char *test = (char*) malloc(sizeof(char)*5);
+        sprintf(input, "%.*s", 4, test);
+        if (strcmp(test, "STAT"))
+            stat(mem);
+        else
+            printf("error: Invalid command: %s\n", input);
+    } else
+        printf("error: Invalid command: %s\n", input);
 }
 
 void interact(LLU size, char *prog_name) {

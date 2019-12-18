@@ -167,6 +167,10 @@ void compact(list *this) {
     block *cur = this->head;
     LLU free = 0;
 
+    // Exit if we only have one block of memory
+    if (cur->next == NULL && cur->prev == NULL)
+        return;
+
     /*
         Remove all free blocks and keep a running total of their length. Subtract this length from the start of all proceeding blocks.
     */

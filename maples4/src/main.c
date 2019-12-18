@@ -18,10 +18,16 @@
  */
 void handle_rq_cmd(list *mem, char *input) {
     // Scan in data from input string
-    int proc, fit = 0;
+    int proc = -1, fit = 0;
     LLU size = 0;
-    char fit_tmp = 'B';
+    char fit_tmp = '?';
     sscanf(input, "%*s %*c%d %llu %c", &proc, &size, &fit_tmp);
+
+    // Validate process number
+    if (proc == -1) {
+        printf("error: Invalid process number\n");
+        return;
+    }
 
     /*
         Assign a numeric fit value based on the input char, print an error if the fit is invalid.
@@ -64,7 +70,7 @@ void handle_cmd(list *mem, char *input, int len) {
         handle_rq_cmd(mem, input);
     } else if (input[0] == 'R' && input[1] == 'L' && input[3] == 'P') {
         // Scan in data from input
-        int proc = 0;
+        int proc = -1;
         sscanf(input, "%*s %*c%d", &proc);
         release(mem, proc);
     } else if (input[0] == 'C' && len <= 2) {

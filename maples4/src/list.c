@@ -75,8 +75,8 @@ block *find_fit(list *this, LLU size, int fit) {
             }
 
             // Check if the block is better, worse, or the first fit.
-            if (best == NULL || (cur->length < best->length && fit == BEST) ||
-                (cur->length > best->length && fit == WORST))
+            if (best == NULL || (cur->length <= best->length && fit == BEST) ||
+                (cur->length >= best->length && fit == WORST))
                 best = cur;
         }
 

@@ -1,0 +1,13 @@
+To compile:
+    make;
+
+Usage:
+    ./allocator <Total memory size>
+
+Notes:
+- All functionality described in the PDF is implimented
+- Valgrind reports suppressed errors from libc (bug in version 2.30),
+  program still works.
+- Requesting more than one block for the same process will create a
+  new block rather than increasing the size of the existing block.
+  Release will release the first block with that process number.

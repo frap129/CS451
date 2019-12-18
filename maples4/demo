@@ -1,0 +1,47 @@
+[ArchXPS maples4]: $ ./allocator 4096
+./allocator> RQ P0 128 F
+./allocator> RQ P1 512 F
+./allocator> RQ P2 16 F 
+./allocator> RQ P3 128 F
+./allocator> RQ P4 1024 F
+./allocator> STAT
+Address [0:127] Process P0
+Address [128:639] Process P1
+Address [640:655] Process P2
+Address [656:783] Process P3
+Address [784:1807] Process P4
+Address [1808:4095] Unused
+./allocator> RL P1
+./allocator> RL P4
+./allocator> STAT
+Address [0:127] Process P0
+Address [128:639] Unused
+Address [640:655] Process P2
+Address [656:783] Process P3
+Address [784:4095] Unused
+./allocator> RQ P4 128 W
+./allocator> STAT
+Address [0:127] Process P0
+Address [128:639] Unused
+Address [640:655] Process P2
+Address [656:783] Process P3
+Address [784:911] Process P4
+Address [912:4095] Unused
+./allocator> RL P3
+./allocator> RQ P1 128 B
+./allocator> STAT
+Address [0:127] Process P0
+Address [128:639] Unused
+Address [640:655] Process P2
+Address [656:783] Process P1
+Address [784:911] Process P4
+Address [912:4095] Unused
+./allocator> C
+./allocator> STAT
+Address [0:127] Process P0
+Address [128:143] Process P2
+Address [144:271] Process P1
+Address [272:399] Process P4
+Address [400:4095] Unused
+./allocator> X
+
